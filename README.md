@@ -57,16 +57,14 @@ Resources
 
 ### SQL
 
-Maintainging database schema:
+Maintaining database schema:
 
   * MySQL Workbench 
   * PhpMyAdmin          
   
 ORM/DBAL:
 
- * ADODB       !
- 
- 
+ * ADODB
 
 ### Web
 
@@ -129,13 +127,13 @@ Planning
 
 -   Download the source tarball or clone:
     
-        git clone 
+        git clone https://github.com/vicxyz1/publishr-online.git 
 
--   In application folder:
+-   In __application__ folder:
         
         composer install
 
--   In www folder:
+-   In __www__ folder:
     
         cp config.inc.dist.php config.inc.php
 
@@ -145,7 +143,7 @@ Planning
     
         chmod a+w application/cache application/log
 
--   Create databases, then create the schema:
+-   Create database, then create the schema:
     
         mysql -u user -p password < sql/flicker.sql
 
