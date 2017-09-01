@@ -1,0 +1,16 @@
+{
+    "name": "vendor/flickr",
+    "description": "Schedule publishing photos on Flickry",
+    "authors": [
+        {
+            "name": "vicentiu costache",
+            "email": "vicxyz@gmail.com"
+        }
+    ],
+    "require": {
+        "adodb/adodb-php": "dev-master",
+        "swiftmailer/swiftmailer": "^5.4",
+        "saltybeagle/savant3": "dev-master",
+         "monolog/monolog": "^1.17"
+    }
+}

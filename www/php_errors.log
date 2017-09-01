@@ -1,0 +1,2 @@
+[01-Sep-2017 12:55:41 Europe/Bucharest] PHP Warning:  require(config.inc.php): failed to open stream: No such file or directory in /home/vic/work/publishr-online/www/index.php on line 3
+[01-Sep-2017 12:55:41 Europe/Bucharest] PHP Fatal error:  require(): Failed opening required 'config.inc.php' (include_path=':/usr/share/php/libzend-framework-php') in /home/vic/work/publishr-online/www/index.php on line 3
