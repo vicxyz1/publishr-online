@@ -43,27 +43,10 @@ __FIXME:__ Need OAuth authentication
 2.  Add to the group
 
 -   flickr.groups.pools.add
-
-<!-- -->
-
 -   flickr.groups.pools.getGroups:
     https://www.flickr.com/services/api/flickr.groups.pools.getGroups.html
 
-### Statistics
 
-**check Flickr PRO : violation of terms?**
-
-
-1.  Show Total no of Views, Favorites & Comments
-2.  Show Most viewed photos
-3.  Show Most faved photos
-4.  Show Most commented photos
-
--   views in search, favs ?
--   flickr.photos.getFavorites total ..
--   flickr.photos.comments.getList �total
-
-**favs + comments no real time**
 
 Resources
 ---------
@@ -129,9 +112,7 @@ TODO LIST
 Planning
 --------
 
-### Alpha ReleaseD
-
-
+- version 1.0 Released
 
 
 
