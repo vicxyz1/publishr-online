@@ -72,12 +72,8 @@ ORM/DBAL:
 
 Colors: #EC008B #27A9E1 #286193
 
--   Bootstrap:
-     * http://www.layoutit.com/build
-     * https://www.boottheme.com   
-     * https://jetstrap.com/demo    
-     
-- Image gallery
+-   Bootstrap3: Pingendo theme
+-   Image gallery
     * https://github.com/rvera/image-picker
      
 
@@ -151,6 +147,6 @@ Planning
 
 -   Create databases, then create the schema:
     
-        mysql -u root -p flicker < resources/flicker.sql
+        mysql -u user -p password < sql/flicker.sql
 
 
