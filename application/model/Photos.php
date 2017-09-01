@@ -19,7 +19,7 @@ class Photos {
     //put your code here
     private $_flickr;
     private $_privacy = 5; //public 1, friends, family, family&friends, private
-    //FIXME: nasty, set overrides
+    //FIXME: nasty, create setters
     public $db;
     public $token;
     public $pages = null;
@@ -74,15 +74,7 @@ class Photos {
 
         //get all private
         $photos = $this->_flickr->photos_search($search_param);
-//        $per_page = 5;
-        //$pager = new phpFlickr_pager($this->_flickr, 'flickr.photos.search', $search_param, $per_page);
-//        if (!$pager ) {
-//            logMessage($this->_flickr->getErrorMsg());
-//            return false;
-//        }
-//        
-//        $photos = $pager->get($page);
-//        logEval($pager, 'pager');
+
 
         if (!$photos) {
             logMessage($this->_flickr->getErrorMsg());
@@ -178,8 +170,7 @@ class Photos {
     function schedule($photos, $datetime, $groups, $tags) {
 
         //var_dump($photos);
-        //TODO: de verificat datetime>now
-        //atentie la fatal dublicate
+        //TODO: check datetime>now
 
         if (!is_array($groups)) $groups = array($groups);
 
@@ -246,13 +237,7 @@ class Photos {
         $views_photos = $this->_photos;
 
 
-//        $views_photos = array();
-//        
-//        foreach ($this->_photos as $id => $photo) {
-//            $views_photos[$id] = $photo['views'];
-//            
-//        }
-//        arsort($views_photos);       
+
         uasort($views_photos, 'compare_views');
 
         logEval($views_photos, 'viewed photos');
