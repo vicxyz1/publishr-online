@@ -38,7 +38,7 @@ class Photos {
      */
     function setToken($token) {
 
-        $this->token = $token;
+        $this->token['token'] = $token;
         $this->_flickr->setOauthToken($token['token'], $token['secret']);
     }
 
@@ -106,7 +106,7 @@ class Photos {
         $this->pages = 0;
         //check if already scheduled
 
-        $scheduled = $this->db->getCol('SELECT flickr_photo_id FROM photos WHERE auth_token=? ', array($this->token), true);
+        $scheduled = $this->db->getCol('SELECT flickr_photo_id FROM photos WHERE auth_token=? ', array($this->token['token']), true);
         //dirty cast
         foreach ($all_photos as $i => $id)
             $all_photos[$i] = (string) $id;
@@ -138,12 +138,12 @@ class Photos {
         $this->getPhotos();
 
 
-        $total_scheduled = $this->db->getONe('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array($this->token));
+        $total_scheduled = $this->db->getONe('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array($this->token['token']));
         $this->pages = ceil($total_scheduled / $this->per_page);
 
         logEval($total_scheduled, 'total scheduled');
 
-        $scheduled = $this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token, $this->per_page, ($page - 1) * $this->per_page));
+        $scheduled = $this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
 
 
         $photos = $this->_photos;
@@ -178,7 +178,7 @@ class Photos {
             $photo = array(
                 'flickr_photo_id' => $id,
                 'publish_time' => $datetime,
-                'auth_token' => $this->token,
+                'auth_token' => ['token'],
                 'flickr_groups' => implode(',', $groups)
             );
 
@@ -197,7 +197,7 @@ class Photos {
             $photos = array($photos);
 
         foreach ($photos as $id) {
-            $this->db->query('DELETE FROM photos WHERE flickr_photo_id=? AND auth_token=?', array($id, $this->token));
+            $this->db->query('DELETE FROM photos WHERE flickr_photo_id=? AND auth_token=?', array($id, $this->token['token']));
         }
     }
 
