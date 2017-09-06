@@ -2,6 +2,8 @@ Photo Publishr Online
 ================
 _Upload now, publish when you want on Flickr_
 
+vs 1.1
+__OAuth authentication__ branch
 
 Description
 -----------
@@ -9,7 +11,7 @@ Description
 Schedule when your Flickr photos will be published for public  
 
 
-__FIXME:__ Need OAuth authentication 
+
 
 
 ### INSTALLING

@@ -17,12 +17,18 @@ $permissions             = "write";
 
 ob_start();
     
-unset($_SESSION['phpFlickr_auth_token']);
- 
-if ( isset($_SESSION['phpFlickr_auth_redirect']) && !empty($_SESSION['phpFlickr_auth_redirect']) ) {
-	$redirect = $_SESSION['phpFlickr_auth_redirect'];
-	unset($_SESSION['phpFlickr_auth_redirect']);
-}
+unset($_SESSION['phpFlickr_oauth_token']);
+
+$f = new phpFlickr($api_key, $api_secret);
+$f->getRequestToken($callback);
+
+
+//
+//
+//if ( isset($_SESSION['phpFlickr_auth_redirect']) && !empty($_SESSION['phpFlickr_auth_redirect']) ) {
+//	$redirect = $_SESSION['phpFlickr_auth_redirect'];
+//	unset($_SESSION['phpFlickr_auth_redirect']);
+//}
 
 
 
@@ -45,4 +51,4 @@ if (empty($redirect)) {
 	header("Location: " . $redirect);
 }
 
-
+/*EOF*/

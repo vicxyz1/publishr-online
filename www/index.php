@@ -7,7 +7,8 @@ require_once BASE_LOCATION . '/model/Photos.php';
 //unset($_SESSION['phpFlickr_auth_token']);
 
 if (isset($_GET['logout'])) {
-    unset($_SESSION['phpFlickr_auth_token']);
+    unset($_SESSION['phpFlickr_oauth_token']);
+    unset($_SESSION['phpFlickr_oauth_secret_token']);
 }
 
 logEval($_POST, 'post');
@@ -15,12 +16,17 @@ $tpl_param = array();
 
 $tpl_param['menu'] = 'home';
 
-if (!isset($_SESSION['phpFlickr_auth_token'])) {
+if (!isset($_SESSION['phpFlickr_oauth_token'])) {
 
     $tpl->tpl = 'index.tpl.php';
     $tpl->display('layout_nologin.tpl.php');
     die();
 }
+
+$token = array(
+   'token' => $_SESSION['phpFlickr_oauth_token'],
+   'secret'=> $_SESSION['phpFlickr_oauth_secret_token'],
+);
 
 $action = 'none';
 $template = 'home';
@@ -28,7 +34,7 @@ $template = 'home';
 
 $Photos = new Photos($f);
 $Photos->db = $db;
-$Photos->setToken($_SESSION['phpFlickr_auth_token']['_content']);
+$Photos->setToken($token );
 
  $tags = array();
 

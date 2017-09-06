@@ -34,12 +34,12 @@ class Photos {
 
     /**
      * 
-     * @param type $token
+     * @param array $token
      */
     function setToken($token) {
 
         $this->token = $token;
-        $this->_flickr->setToken($token);
+        $this->_flickr->setOauthToken($token['token'], $token['secret']);
     }
 
     /**
