@@ -4,11 +4,20 @@ require 'config.inc.php';
 require_once BASE_LOCATION . '/bootstrap.php';
 require_once BASE_LOCATION . '/model/Photos.php';
 
+$callback = SITE_URL . '/auth.php';
+
 //unset($_SESSION['phpFlickr_auth_token']);
 
 if (isset($_GET['logout'])) {
     unset($_SESSION['phpFlickr_oauth_token']);
     unset($_SESSION['phpFlickr_oauth_secret_token']);
+}
+
+
+if (isset($_GET['login'])) {
+    $f->getRequestToken($callback);
+    $_SESSION['redirect'] = 'index.php';
+    die();
 }
 
 logEval($_POST, 'post');
