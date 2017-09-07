@@ -43,18 +43,18 @@ $token = array(
 //get all private
 //$photos = $this->_flickr->photos_search($search_param);
 
-$f->setOauthToken($token['token'], $token['secret']);
-$search_param = array(
-    'user_id' => 'me',
-    'per_page' => 300,
-    'extras' => 'url_t, url_q, views,url_o, url_z',
-    'privacy_filter' => 5
-);
+//$f->setOauthToken($token['token'], $token['secret']);
+//$search_param = array(
+//    'user_id' => 'me',
+//    'per_page' => 300,
+//    'extras' => 'url_t, url_q, views,url_o, url_z',
+//    'privacy_filter' => 5
+//);
+//
+//$p = $f->photos_search($search_param);
+////print_r($f->getErrorMsg());
 
-$p = $f->photos_search($search_param);
-print_r($f->getErrorMsg());
-
-var_dump($p);
+//var_dump($p);
 $action = 'none';
 $template = 'home';
 
