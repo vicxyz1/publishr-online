@@ -221,7 +221,7 @@ if ( !class_exists('phpFlickr') ) {
             return $this->getAccessToken();
         }
         
-        function getRequestToken($callback) {
+        function getRequestToken($callback, $permissions = 'read') {
             if (session_id() == '')
             session_start();
             
@@ -250,7 +250,7 @@ if ( !class_exists('phpFlickr') ) {
             $_SESSION['oauth_tokentmp'] = $reponse['oauth_token'];
             $_SESSION['oauth_secrettmp'] = $reponse['oauth_token_secret'];
             
-            header("location: ".$this->oauthauthorize_endpoint.'?oauth_token='.$reponse['oauth_token'].'&perms=read');
+            header("location: ".$this->oauthauthorize_endpoint.'?oauth_token='.$reponse['oauth_token'].'&perms='.$permissions);
             
             $this->error_code = '';
             $this->error_msg = '';
