@@ -14,17 +14,27 @@ $api_key = API_KEY;
 $api_secret = API_SECRET;
 $default_redirect = API_REDIRECT;
 $permissions = "write";
-$callback = '';
+$callback = SITE_URL . 'auth.php';
+
 ob_start();
+
+if (!isset($_GET['oauth_token'])) {
+
+
+
+    $f->getRequestToken($callback);
+    $_SESSION['redirect'] = SITE_URL;
+    die();
+
+}
 
 
 $f->getAccessToken();
 $OauthToken = $f->getOauthToken();
 $OauthSecretToken = $f->getOauthSecretToken();
-
-
 $_SESSION['phpFlickr_oauth_token'] = $OauthToken;
 $_SESSION['phpFlickr_oauth_secret_token'] = $OauthSecretToken;
+
 
 $redirect = isset($_SESSION['redirect']) ? $_SESSION['redirect'] : '';
 
