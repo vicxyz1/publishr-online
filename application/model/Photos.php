@@ -19,9 +19,10 @@ class Photos {
     //put your code here
     private $_flickr;
     private $_privacy = 5; //public 1, friends, family, family&friends, private
+    private $token;
     //FIXME: nasty, create setters
     public $db;
-    public $token;
+
     public $pages = null;
     public $per_page = PHOTOS_PER_PAGE;
     private $_photos = null;
@@ -38,7 +39,7 @@ class Photos {
      */
     function setToken($token) {
 
-        $this->token['token'] = $token;
+        $this->token = $token;
         $this->_flickr->setOauthToken($token['token'], $token['secret']);
     }
 
@@ -100,7 +101,9 @@ class Photos {
      */
     function getUnpublished($page) {
 
-        $this->getPhotos();
+        if (!$this->getPhotos()) {
+            return array();
+        }
         $all_photos = array_keys($this->_photos);
 
         $this->pages = 0;
