@@ -4,7 +4,7 @@ require 'config.inc.php';
 require_once BASE_LOCATION . '/bootstrap.php';
 require_once BASE_LOCATION . '/model/Photos.php';
 
-$callback = SITE_URL . '/auth.php';
+$callback = SITE_URL . 'auth.php';
 
 //unset($_SESSION['phpFlickr_auth_token']);
 
@@ -13,7 +13,7 @@ if (isset($_GET['logout'])) {
     unset($_SESSION['phpFlickr_oauth_secret_token']);
 }
 
-
+//TODO: remove
 if (isset($_GET['login'])) {
     $f->getRequestToken($callback);
     $_SESSION['redirect'] = 'index.php';
@@ -32,11 +32,29 @@ if (!isset($_SESSION['phpFlickr_oauth_token'])) {
     die();
 }
 
+//logged:
+
 $token = array(
    'token' => $_SESSION['phpFlickr_oauth_token'],
    'secret'=> $_SESSION['phpFlickr_oauth_secret_token'],
 );
 
+
+//get all private
+//$photos = $this->_flickr->photos_search($search_param);
+
+$f->setOauthToken($token['token'], $token['secret']);
+$search_param = array(
+    'user_id' => 'me',
+    'per_page' => 300,
+    'extras' => 'url_t, url_q, views,url_o, url_z',
+    'privacy_filter' => 5
+);
+
+$p = $f->photos_search($search_param);
+print_r($f->getErrorMsg());
+
+var_dump($p);
 $action = 'none';
 $template = 'home';
 
