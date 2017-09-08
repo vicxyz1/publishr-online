@@ -3,8 +3,8 @@
 /**
  *   Publishr-Online
  *
- *   @author     Costache Vicentiu <vicxyz@gmail.com>
- *   @copyright (c) 2016-2017. All rights reserved.
+ * @author     Costache Vicentiu <vicxyz@gmail.com>
+ * @copyright (c) 2016-2017. All rights reserved.
  *
  *   For the full copyright and license information, please view the LICENSE* file that was distributed with this source code.
  */
@@ -14,7 +14,8 @@
  *
  * @author vic
  */
-class Photos {
+class Photos
+{
 
     //put your code here
     private $_flickr;
@@ -28,26 +29,29 @@ class Photos {
     private $_photos = null;
     public $total_views = 0;
 
-    function __construct($flickr) {
+    function __construct($flickr)
+    {
 
         $this->_flickr = $flickr;
     }
 
     /**
-     * 
+     *
      * @param array $token
      */
-    function setToken($token) {
+    function setToken($token)
+    {
 
         $this->token = $token;
         $this->_flickr->setOauthToken($token['token'], $token['secret']);
     }
 
     /**
-     * 
+     *
      * @param type $privacy
      */
-    public function setPrivacy($privacy) {
+    public function setPrivacy($privacy)
+    {
 
         $this->_privacy = $privacy;
     }
@@ -57,11 +61,11 @@ class Photos {
      * @param type $page
      * @return boolean
      */
-    public function getPhotos($privacy = null) {
+    public function getPhotos($privacy = null)
+    {
 
         if (!is_null($this->_photos))
             return false;
-
 
 
         //max 30
@@ -95,11 +99,12 @@ class Photos {
     }
 
     /**
-     * 
+     *
      * @param type $page
      * @return type
      */
-    function getUnpublished($page) {
+    function getUnpublished($page)
+    {
 
         if (!$this->getPhotos()) {
             return array();
@@ -109,10 +114,13 @@ class Photos {
         $this->pages = 0;
         //check if already scheduled
 
-        $scheduled = $this->db->getCol('SELECT flickr_photo_id FROM photos WHERE auth_token=? ', array($this->token['token']), true);
+        $scheduled = $this->db->getCol('SELECT flickr_photo_id FROM photos WHERE auth_token=? ', array("{$this->token['token']}:{$this->token['secret']}"), true);
+
+        logEval($scheduled, 'scheduled from unpublished');
+
         //dirty cast
         foreach ($all_photos as $i => $id)
-            $all_photos[$i] = (string) $id;
+            $all_photos[$i] = (string)$id;
 
 //        logEval($all_photos, 'all photos');
         logEval($scheduled, 'scheduled');
@@ -137,16 +145,19 @@ class Photos {
         return $photos;
     }
 
-    function getScheduled($page) {
-        $this->getPhotos();
+    function getScheduled($page)
+    {
+        if (!$this->getPhotos()) {
+            return array();
+        }
 
 
-        $total_scheduled = $this->db->getONe('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array($this->token['token']));
+        $total_scheduled = $this->db->getOne('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array("{$this->token['token']}:{$this->token['secret']}"));
         $this->pages = ceil($total_scheduled / $this->per_page);
 
         logEval($total_scheduled, 'total scheduled');
 
-        $scheduled = $this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
+        $scheduled = $this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array("{$this->token['token']}:{$this->token['secret']}", $this->per_page, ($page - 1) * $this->per_page));
 
 
         $photos = $this->_photos;
@@ -170,7 +181,8 @@ class Photos {
         return $photo_scheduled;
     }
 
-    function schedule($photos, $datetime, $groups, $tags) {
+    function schedule($photos, $datetime, $groups, $tags)
+    {
 
         //var_dump($photos);
         //TODO: check datetime>now
@@ -181,7 +193,7 @@ class Photos {
             $photo = array(
                 'flickr_photo_id' => $id,
                 'publish_time' => $datetime,
-                'auth_token' => ['token'],
+                'auth_token' => "{$this->token['token']}:{$this->token['secret']}",
                 'flickr_groups' => implode(',', $groups)
             );
 
@@ -189,22 +201,25 @@ class Photos {
             try {
                 $this->db->autoExecute('photos', $photo, 'INSERT');
             } catch (Exception $e) {
+                echo $this->db->errorMsg();
                 return FALSE;
             }
         }
     }
 
-    function unpublish($photos) {
+    function unpublish($photos)
+    {
 
         if (!is_array($photos))
             $photos = array($photos);
 
         foreach ($photos as $id) {
-            $this->db->query('DELETE FROM photos WHERE flickr_photo_id=? AND auth_token=?', array($id, $this->token['token']));
+            $this->db->query('DELETE FROM photos WHERE flickr_photo_id=? AND auth_token=?', array($id, "{$this->token['token']}:{$this->token['secret']}"));
         }
     }
 
-    function publish($photo) {
+    function publish($photo)
+    {
 //        print_r($photo);
 
         if (!$this->_flickr->photos_setPerms($photo['flickr_photo_id'], 1, 0, 0, 3, 0)) {
@@ -224,21 +239,21 @@ class Photos {
                 }
             }
         }
-        
+
         if (!$this->_flickr->photos_addTags($photo['flickr_photo_id'], 'publishr.online')) {
             logMessage($this->_flickr->geterrorMsg(), \Monolog\Logger::WARNING);
         }
-                
-        
+
+
     }
 
-    public function getMostViewed($count = 10) {
+    public function getMostViewed($count = 10)
+    {
         //get public & reset photos
         $this->_photos = null;
         logMessage('getMostViewed');
         $this->getPhotos(1);
         $views_photos = $this->_photos;
-
 
 
         uasort($views_photos, 'compare_views');
@@ -248,7 +263,8 @@ class Photos {
         return array_slice($views_photos, 0, $count);
     }
 
-    public function getPhoto($id) {
+    public function getPhoto($id)
+    {
 
         $this->getPhotos();
 
@@ -257,7 +273,8 @@ class Photos {
 
 }
 
-function compare_views($p1, $p2) {
+function compare_views($p1, $p2)
+{
     if ($p1['views'] == $p2['views'])
         return 0;
     return ($p1['views'] > $p2['views']) ? -1 : 1;

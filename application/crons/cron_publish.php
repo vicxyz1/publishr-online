@@ -32,7 +32,10 @@ $Photos->db = $db;
 
 foreach ($photos as $photo) {
     logEval($photo, 'photo to process');
-    $Photos->setToken($photo['auth_token']);
+
+    list($token, $secret) = explode(',', $photo['auth_token']);
+
+    $Photos->setToken(array('token'=>$token, 'secret'=>$secret));
 
     $Photos->publish($photo);
 }
