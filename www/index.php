@@ -40,21 +40,7 @@ $token = array(
 );
 
 
-//get all private
-//$photos = $this->_flickr->photos_search($search_param);
 
-//$f->setOauthToken($token['token'], $token['secret']);
-//$search_param = array(
-//    'user_id' => 'me',
-//    'per_page' => 300,
-//    'extras' => 'url_t, url_q, views,url_o, url_z',
-//    'privacy_filter' => 5
-//);
-//
-//$p = $f->photos_search($search_param);
-////print_r($f->getErrorMsg());
-
-//var_dump($p);
 $action = 'none';
 $template = 'home';
 
@@ -82,7 +68,7 @@ if (isset($_POST['action'])) {
 
 
     $photos = isset($_POST['photos']) ? $_POST['photos'] : array();
-
+    $usergroups = isset($_POST['groups']) ? $_POST['groups'] : array();
 
 
 
@@ -97,11 +83,12 @@ if (isset($_POST['action'])) {
         //$pub_time = DateTime::createFromFormat('Y-m-d H:i T', $datetime, new DateTimeZone(SITE_TIMEZONE));
     //    $pub_time = date('Y-m-d H:i:s', $pub_time);    
         logEval($pub_time, 'pub time');
-        
+
+
         
         //everything ok 
-        if (!isset($tpl_param['err_msg'])) {
-            $Photos->schedule($photos,  strtotime($pub_time) , $_POST['groups'], $tags);
+        if (!isset($tpl_param['err1_msg'])) {
+            $Photos->schedule($photos,  strtotime($pub_time) , $usergroups, $tags);
         }
 
     endif;
