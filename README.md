@@ -38,6 +38,9 @@ Schedule when your Flickr photos will be published for public
     
         mysql -u user -p password < sql/flicker.sql
 
+### MIGRATION
+
+ALTER TABLE `photos` ADD `auth_secret` VARCHAR(200) NOT NULL DEFAULT '' AFTER `auth_token`;
 
 ## Features 
 

@@ -197,6 +197,7 @@ class Photos
                 'flickr_photo_id' => $id,
                 'publish_time' => $datetime,
                 'auth_token' => $this->token['token'],
+                'auth_secret' => $this->token['secret'],
                 'flickr_groups' => implode(',', $groups)
             );
 
@@ -223,7 +224,7 @@ class Photos
 
     function publish($photo)
     {
-//        print_r($photo);
+        logEval($photo,'photo to publish');
 
         if (!$this->_flickr->photos_setPerms($photo['flickr_photo_id'], 1, 0, 0, 3, 0)) {
             logMessage($this->_flickr->geterrorMsg(), \Monolog\Logger::WARNING);
