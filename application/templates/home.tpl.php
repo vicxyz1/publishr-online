@@ -177,7 +177,7 @@
         showTodayButton: true,
         showClose: true,
         sideBySide: true,
-//            useCurrent: true,
+            useCurrent: true,
         defaultDate: moment(),
         minDate: moment().subtract(1, 'minutes')
     });
