@@ -161,12 +161,13 @@ class Photos
 
         $scheduled = $this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
 
+        logEval($scheduled, 'scheduled from db ');
 
         $photos = $this->_photos;
 
 
         $photo_scheduled = array();
-        //var_dump($scheduled);
+
         if (!empty($scheduled)) {
             foreach ($scheduled as $id => $datetime) {
 

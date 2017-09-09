@@ -20,6 +20,7 @@ require_once 'vendor/adodb/adodb-php/adodb-errorhandler.inc.php';
  $db = ADONewConnection('mysqli'); # eg. 'mysql' or 'oci8'
  $db->debug = false;
  $db->Connect($dbconfig['host'], $dbconfig['username'], $dbconfig['password'], $dbconfig['name']);
+ $db->setFetchMode(ADODB_FETCH_ASSOC);
 
 $tpl = new Savant3();
 $tpl->setPath('template', TEMPLATES_LOCATION);
