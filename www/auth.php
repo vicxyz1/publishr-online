@@ -22,7 +22,7 @@ if (!isset($_GET['oauth_token'])) {
 
 
 
-    $f->getRequestToken($callback);
+    $f->getRequestToken($callback, $permissions);
     $_SESSION['redirect'] = SITE_URL;
     die();
 
