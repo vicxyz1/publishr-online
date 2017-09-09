@@ -65,7 +65,7 @@ class Photos
     {
 
         if (!is_null($this->_photos))
-            return false;
+            return true;
 
 
         //max 30
@@ -114,7 +114,9 @@ class Photos
         $this->pages = 0;
         //check if already scheduled
 
-        $scheduled = $this->db->getCol('SELECT flickr_photo_id FROM photos WHERE auth_token=? ', array("{$this->token['token']}:{$this->token['secret']}"), true);
+        logEval($this->token,'token before get col');
+
+        $scheduled = $this->db->getCol('SELECT flickr_photo_id FROM photos WHERE auth_token=? ', array($this->token['token']), true);
 
         logEval($scheduled, 'scheduled from unpublished');
 
@@ -152,12 +154,12 @@ class Photos
         }
 
 
-        $total_scheduled = $this->db->getOne('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array("{$this->token['token']}:{$this->token['secret']}"));
+        $total_scheduled = $this->db->getOne('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array($this->token['token']));
         $this->pages = ceil($total_scheduled / $this->per_page);
 
         logEval($total_scheduled, 'total scheduled');
 
-        $scheduled = $this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array("{$this->token['token']}:{$this->token['secret']}", $this->per_page, ($page - 1) * $this->per_page));
+        $scheduled = $this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
 
 
         $photos = $this->_photos;
@@ -193,7 +195,7 @@ class Photos
             $photo = array(
                 'flickr_photo_id' => $id,
                 'publish_time' => $datetime,
-                'auth_token' => "{$this->token['token']}:{$this->token['secret']}",
+                'auth_token' => $this->token['token'],
                 'flickr_groups' => implode(',', $groups)
             );
 
@@ -214,7 +216,7 @@ class Photos
             $photos = array($photos);
 
         foreach ($photos as $id) {
-            $this->db->query('DELETE FROM photos WHERE flickr_photo_id=? AND auth_token=?', array($id, "{$this->token['token']}:{$this->token['secret']}"));
+            $this->db->query('DELETE FROM photos WHERE flickr_photo_id=? AND auth_token=?', array($id, $this->token['token']));
         }
     }
 
