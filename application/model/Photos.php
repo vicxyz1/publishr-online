@@ -179,7 +179,6 @@ class Photos
                 $photo_scheduled [$date][] = $this->_photos[$id];
             }
         }
-//          var_dump($photo_scheduled);                
 
         return $photo_scheduled;
     }
@@ -187,7 +186,6 @@ class Photos
     function schedule($photos, $datetime, $groups, $tags)
     {
 
-        //var_dump($photos);
         //TODO: check datetime>now
 
         if (!is_array($groups)) $groups = array($groups);
