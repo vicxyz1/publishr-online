@@ -1,21 +1,16 @@
-<script src="js/image-picker.min.js" /></script>
-<script src="js/moment.min.js" /></script>
-<script src="js/validator.min.js" /></script>
-<script src="js/bootstrap-datetimepicker.min.js" /></script>
-<script src="js/jquery.twbsPagination.min.js" /></script>
-<script src="js/ekko-lightbox.min.js" /></script>
+
 <!--<script src="js/jquery.datetimepicker.full.min.js" /></script>-->
 <style>
     @import url('css/image-picker.css');
     @import url('css/bootstrap-datetimepicker.min.css');
     @import url('css/ekko-lightbox.min.css');
     /*    @import url('css/bootstrap-responsive.min.css');*/
-    
+
     #setGroups img {
         width: 48px
     }
 
-    
+
 </style>
 <div class="section">
     <div class="container">
@@ -117,10 +112,10 @@
 
                     <input type="hidden" name="action" value="unpublish" />
                     <input type="hidden" name="date" value="<?= $date ?>" />
-                    <h4> 
-                        <span class="label label-default"><?= date('F, j Y', strtotime($date)) ?></span> 
-                        <a  name="<?= str_replace('-', '_', $date) ?>" href="#btn<?= str_replace('-', '_', $date) ?>" class="btn btn-danger btn-xs" 
-                            onclick="$(this).parent().parent().submit(); return false" type="button">Cancel</a> 
+                    <h4>
+                        <span class="label label-default"><?= date('F, j Y', strtotime($date)) ?></span>
+                        <a  name="<?= str_replace('-', '_', $date) ?>" href="#btn<?= str_replace('-', '_', $date) ?>" class="btn btn-danger btn-xs"
+                            onclick="$(this).parent().parent().submit(); return false" type="button">Cancel</a>
                     </h4>
                     <select multiple="multiple" class="image-picker show-html" name="photos[]">
                         <?php foreach ($photos_scheduled as $photo): ?>
@@ -139,7 +134,12 @@
             </div></div>
     </div>
 </div>
-
+  <script src="js/image-picker.min.js" /></script>
+<script src="js/moment.min.js" /></script>
+<script src="js/validator.min.js" /></script>
+<script src="js/bootstrap-datetimepicker.min.js" /></script>
+<script src="js/jquery.twbsPagination.min.js" /></script>
+<script src="js/ekko-lightbox.min.js" /></script>
 
 <script type="text/javascript">
     $("select").imagepicker({

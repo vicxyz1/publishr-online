@@ -4,14 +4,14 @@
         <meta name="description" content="Upload your photos as private, make them public when you want! Simplify your way to publish photos from the photostream.<?= ucwords($this->menu) ?>">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link href="//pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
+		
     </head>
     <body>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
         <div class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -31,7 +31,7 @@
                             <a href="index.php">Home</a>
                         </li>
                         <li <?php if ($this->menu == 'contact'): ?>class="active"<?php endif; ?>>
-                            <a href="contact.php">Contact</a>
+                            <a href="contact.php#contact">Contact</a>
                         </li>
                         <li>
                             <a href="index.php?logout=1" ><i class="fa fa-fw fa-sign-out"></i>Logout</a>
@@ -92,6 +92,8 @@
                 </div>
             </div>
         </footer>
+		      
+		 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script>
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
