@@ -18,6 +18,15 @@ $callback = SITE_URL . 'auth.php';
 
 ob_start();
 
+//already logged
+if (isset($_SESSION['phpFlickr_oauth_token'])) {
+	
+	header("Location: " . $default_redirect);
+    die();
+	
+}
+
+
 if (!isset($_GET['oauth_token'])) {
 
 
