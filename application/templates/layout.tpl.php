@@ -56,36 +56,62 @@
                         <p>Help us improving the application by letting us know about your suggestions or feature requests, issues discovered while using it.</p>
                         <p><a href="faq.php#faq" class="text-inverse">FAQ</a> 
                             <a href="terms.php" class="text-inverse">Privacy Policy</a></p>
-                        <p class="">This product uses the Flickr API but is not endorsed or certified by Flickr.</p>
+
 
                     </div>
-                    <div class="col-sm-6">
+					<div class="col-sm-6">
 
                         <div class="row">
                             <div class="col-md-12 hidden-lg hidden-md hidden-sm text-left">
-                                <h3>
-                                    <a href="contact.php#contact" class="text-inverse">
-                                        Buy me a beer
-                                    </a>
-                                    <i class="fa fa-fw fa-beer "></i></h3>
-                                <p>If you like and you want to support the development</p>
+							<h2>
+                            <a href="https://github.com/vicxyz1/publishr-online" class="text-inverse">
+                                Follow us on Github <i class="fa  fa-fw fa-github text-inverse"></i>
+                            </a>
+                        </h2>
+                               
+								
+                                <p>If you like and you want to support the development<br/>
+									Buy me a beer <i class="fa fa-fw fa-beer "></i>
+								
+								</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 hidden-xs text-right"> 
-
-                                <h2>
-                                    Buy me a beer
-                                    <i class="fa fa-fw fa-beer "></i></h2>
-                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+								<h2>
+                            <a href="https://github.com/vicxyz1/publishr-online" class="text-inverse">
+                                Follow us on Github <i class="fa  fa-fw fa-github text-inverse"></i>
+                            </a>
+							</h2>
+                            <p>If you like the app and you want to support the development<br/>
+									Buy me a beer <i class="fa fa-fw fa-beer "></i>
+								</p>
+								<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                                     <input type="hidden" name="cmd" value="_s-xclick">
                                     <input type="hidden" name="hosted_button_id" value="9LKG64GTJF99U">
                                     <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                                     <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                                 </form>
 
-                                <p>If you like the app and you want to support the development</p>
+                            </div>
+                        </div>
+                    </div>
+                   
 
+
+
+
+
+<!--                                    <i class="fa fa-fw fa-beer "></i></h2>-->
+<!---->
+<!--                                <p>If you like the app and you want to support the development</p>-->
+
+<!--                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">-->
+<!--                                    <input type="hidden" name="cmd" value="_s-xclick">-->
+<!--                                    <input type="hidden" name="hosted_button_id" value="9LKG64GTJF99U">-->
+<!--                                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">-->
+<!--                                    <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">-->
+<!--                                </form>-->
                             </div>
                         </div>
                     </div>

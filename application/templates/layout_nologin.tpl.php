@@ -53,7 +53,7 @@
         <footer class="section section-primary">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 text-left">
                         <h2>
                             <a href="contact.php#contact" class="text-inverse">
                                 Give Us Your Feedback
@@ -61,29 +61,22 @@
                             <i class="fa fa-fw fa-comment"></i></h2>
                         <p>Help us improving the application by letting us know about your suggestions or feature requests, issues discovered while using it.</p>
 
-<!--                        <p>This product uses the Flickr API but is not endorsed or certified by Flickr.</p>
-<a href="#" class="text-inverse">Privacy Policy</a>-->
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="text-info text-right">
-                            <br>
-                            <br>
+                        <p class="text-info">
                             <a href="faq.php#faq" class="text-inverse">FAQ</a>
                             <a href="terms.php#terms" class="text-inverse">Privacy Policy</a>
-                            
+
                         </p>
-                        <div class="row">
-                            <div class="col-md-12 hidden-lg hidden-md hidden-sm text-left">
-                                <p>This product uses the Flickr API but is not endorsed or certified by Flickr.</p>
-<!--                                <a href="#">Buy me a beer<i class="fa fa-3x fa-fw fa-beer text-inverse"></i></a>-->
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 hidden-xs text-right">
-                                <p>This product uses the Flickr API but is not endorsed or certified by Flickr.</p>
-<!--                               <a href="#"><i class="fa fa-3x fa-fw fa-beer text-inverse"></i></a>-->
-                            </div>
-                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <h2>
+                            <a href="https://github.com/vicxyz1/publishr-online" class="text-inverse">
+                                Follow us on Github <i class="fa  fa-fw fa-github text-inverse"></i>
+                            </a>
+                        </h2>
+
+                        <p>Full Open Source code based on Flickr API using OAuth</p>
                     </div>
                 </div>
             </div>
