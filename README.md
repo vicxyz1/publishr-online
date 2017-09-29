@@ -2,8 +2,8 @@ Photo Publishr Online
 ================
 _Upload now, publish when you want on Flickr_
 
-vs 1.1
-__OAuth authentication__ branch
+v1.1
+
 
 Description
 -----------
@@ -37,119 +37,9 @@ Schedule when your Flickr photos will be published for public
 -   Create database, then create the schema:
     
         mysql -u user -p password < sql/flicker.sql
+		
+- 	Set document root to __www__
 
-### MIGRATION
-
-ALTER TABLE `photos` ADD `auth_secret` VARCHAR(200) NOT NULL DEFAULT '' AFTER `auth_token`;
-
-## Features 
-
-### Get photos
-1.  Auth (DEPRECATED)
-2.  Get private (non published) photos
-
--   flickr.photos.search:  
-        privacy\_filter (Optional)  
-        Return photos only matching a certain privacy level. This only applies
-        when making an authenticated call to view photos you own. Valid values
-        are:  
-            1 public photos  
-            2 private photos visible to friends  
-            3 private photos visible to family  
-            4 private photos visible to friends & family  
-            5 completely private photos
-
-### Schedule publishing
-
-1.  Add to cron list
-2.  Make the photo public
-
--   flickr.photos.setPerms:  
-    is\_public (Required) 1
-
-### Add to groups
-
-1.  Get Groups
-2.  Add to the group
-
--   flickr.groups.pools.add
--   flickr.groups.pools.getGroups:
-    https://www.flickr.com/services/api/flickr.groups.pools.getGroups.html
-
-
-
-Resources
----------
-
-### Mockup
-
--   Balsamiq 3
-
-### SQL
-
-Maintaining database schema:
-
-  * MySQL Workbench 
-  * PhpMyAdmin          
-  
-ORM/DBAL:
-
- * ADODB
-
-### Web
-
-Colors: #EC008B #27A9E1 #286193
-
--   Bootstrap3: Pingendo theme
--   Image gallery
-    * https://github.com/rvera/image-picker
-     
-
-### Flickr API
-
--   phpflickr: https://github.com/dan-coulter/phpflickr  **deprecated auth**
--   https://github.com/alchemy-fr/Phlickr ?
-
-### Libraries  
-
-
-* ADODb
-* Savant
-* Monolog
-
-- composer
-
-
-TODO LIST
-----
-
--  __Fix the Auth with OAuth!__
-
-### Fixes
-
-
-
-### Enhacements
-
-
-
-Planning
---------
-
-- version 1.0 Released
-
-
-
-### Feature WishList
-
-* User Accounts  OK
-
-* Preferences               OK, depends on user accounts
-  - Notification when goes public
-  - Publish Level: 
-    * private ->family&friends
-    * list private, family, friends -> public
-* Statistics NOK - hidden. _May conflict with Flickr PRO_ 
   
    
 
