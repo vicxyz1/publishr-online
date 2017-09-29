@@ -24,6 +24,12 @@ if (!class_exists('phpFlickr')) {
         @session_start();
     }
 
+    if (!function_exists('display_array')) {
+        function display_array($var) {
+            return var_export($var, true);
+        }
+    }
+
     class phpFlickr
     {
         var $api_key;
