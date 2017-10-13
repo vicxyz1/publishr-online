@@ -13,66 +13,81 @@
 
 use App\phpFlickr;
 
-Route::get('/', 'PhotosController@index');
+Route::group(['middleware' => ['web']], function () {
 
-Route::get('/contact', function () {
-    $site_name = env('APP_NAME');
+    //Index page
+    Route::get('/', 'PhotosController@index');
 
-    return view('contact', compact('site_name'));
-});
+    //simple contact page
+    Route::get('/contact', function () {
+        $site_name = env('APP_NAME');
 
-Route::get('/auth', function () {
+        return view('contact', compact('site_name'));
+    });
 
-
-    $site_name = env('APP_NAME');
-
-    $api_key = env('API_KEY');
-    $api_secret = env('API_SECRET');
-
-    $f = new phpFlickr($api_key, $api_secret);
-
-    $site_url = env('APP_URL');
-
-    $default_redirect = $site_url;
-    $permissions = "write";
-    $callback = $site_url . '/auth';
-
-    ob_start();
-
-//already logged
-    if (isset($_SESSION['phpFlickr_oauth_token'])) {
-        redirect($default_redirect);
-    }
+    /**
+     * Authentication with Flickr
+     */
+    Route::get('/auth', function (\Illuminate\Http\Request $request) {
 
 
-    if (!isset($_GET['oauth_token'])) {
+        $site_name = env('APP_NAME');
+
+        $api_key = env('API_KEY');
+        $api_secret = env('API_SECRET');
+
+        $f = new phpFlickr($api_key, $api_secret);
+
+        $site_url = env('APP_URL');
+
+        $default_redirect = $site_url;
+        $permissions = "write";
+        $callback = $site_url . '/auth';
 
 
-        $f->getRequestToken($callback, $permissions);
+        ob_start();
+
+        //already logged
+        if ($request->session()->has('phpFlickr_oauth_token')) {
+
+            return redirect($default_redirect);
+
+        }
 
 
-        $_SESSION['redirect'] = $site_url;
-        die();
-
-    }
+        if (!isset($_GET['oauth_token'])) {
 
 
-    $f->getAccessToken();
-    $OauthToken = $f->getOauthToken();
-    $OauthSecretToken = $f->getOauthSecretToken();
-    $_SESSION['phpFlickr_oauth_token'] = $OauthToken;
-    $_SESSION['phpFlickr_oauth_secret_token'] = $OauthSecretToken;
+            $f->getRequestToken($callback, $permissions);
 
 
-    $redirect = isset($_SESSION['redirect']) ? $_SESSION['redirect'] : '';
+            $request->session()->put('redirect', $site_url);
+            die();
+
+        }
 
 
-    if (empty($redirect)) {
-        redirect($default_redirect);
+        $f->getAccessToken();
+        $OauthToken = $f->getOauthToken();
+        $OauthSecretToken = $f->getOauthSecretToken();
+        $request->session()->put('phpFlickr_oauth_token', $OauthToken);
+        $request->session()->put('phpFlickr_oauth_secret_token', $OauthSecretToken);
 
-    }
-    redirect($redirect);
+//    $data = $request->session()->all();
+//    dd($data);
+
+        $redirect = $request->session()->has('redirect') ? session('redirect') : '';
 
 
-    return view('contact', compact('site_name'));
-});
+        if (empty($redirect)) {
+            return redirect($default_redirect);
+
+        }
+        return redirect($redirect);
+
+
+    });
+
+
+}
+);
