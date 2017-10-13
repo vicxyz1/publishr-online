@@ -10,7 +10,7 @@ Description
 
 Schedule when your Flickr photos will be published for public  
 
-
+Flicker OAuth supported.
 
 
 
@@ -41,7 +41,7 @@ Schedule when your Flickr photos will be published for public
 - 	Set document root to __www__
 
   
-   
+ _For more info, you may check the wiki page: https://github.com/vicxyz1/publishr-online/wiki_
 
 
 
