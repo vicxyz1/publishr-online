@@ -15,7 +15,36 @@
 <script async type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 @if (isset($auth))
 
-    NAvBAR
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url('/') }}"><span>{{ $site_name }}</span></a>
+            </div>
+            <!--<form method="post" id="frmLogout">-->
+            <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://www.flickr.com" rel="nofollow" target="_blank">Back to Flickr</a></li>
+                    <li @if ($menu == 'home') class="active"<?php endif; ?>>
+                        <a href="{{ url('/') }}">Home</a>
+                    </li>
+                    <li @if ($menu == 'contact')class="active"<?php endif; ?>>
+                        <a href="{{ url('/contact#contact') }}">Contact</a>
+                    </li>
+                    <li>
+                        <a href="index.php?logout=1" ><i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                        <input type="hidden" name="action" value="logout" />
+                    </li>
+                </ul>
+            </div>
+            <!--</form>-->
+        </div>
+    </div>
 @else
 <div class="cover">
     <div class="navbar">
