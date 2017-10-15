@@ -75,7 +75,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1 class="text-inverse">{{ $site_name }}"</h1>
+                <h1 class="text-inverse">{{ $site_name }}</h1>
                 <p class="text-inverse">Upload now, publish when you want!</p>
                 <br>
                 <br>

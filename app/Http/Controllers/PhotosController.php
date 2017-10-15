@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Photos;
 
 class PhotosController extends Controller
 {
@@ -27,23 +28,24 @@ class PhotosController extends Controller
         $action = 'none';
         $menu = 'home';
 
-        /*
 
-        $Photos = new Photos($f);
-        $Photos->db = $db;
+
+        $Photos = new Photos();
+
+        //$Photos->db = $db;
         $Photos->setToken($token );
 
         $tags = array();
 
-        $groups = $f->groups_pools_getGroups();
+        $groups = $Photos->getGroups();
 
         $groups = (isset($groups['group']))?$groups['group']:[];
 
-
-
+        dd($groups);
+        /*
         $tpl_param['groups'] = $groups;
 
-        logEval($groups, 'groups');
+
 
         if (isset($_POST['action'])) {
 
