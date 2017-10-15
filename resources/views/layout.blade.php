@@ -8,7 +8,7 @@
 
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
           type="text/css">
-    <link href="//pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="{{url('/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 </head>
 <body>

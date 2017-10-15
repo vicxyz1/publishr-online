@@ -7,8 +7,13 @@ use App\Photos;
 
 class PhotosController extends Controller
 {
-    //
-    public function index(Request $request) {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
         $site_name = env('APP_NAME');
 
 
@@ -41,11 +46,10 @@ class PhotosController extends Controller
 
         $groups = (isset($groups['group']))?$groups['group']:[];
 
-        dd($groups);
-        /*
+
         $tpl_param['groups'] = $groups;
 
-
+        /*
 
         if (isset($_POST['action'])) {
 
@@ -89,18 +93,24 @@ class PhotosController extends Controller
             endif;
         }
 
+        */
+
 
         $spage = isset($_GET['spage']) ? $_GET['spage'] : 1;
         $upage = isset($_GET['upage']) ? $_GET['upage'] : 1;
 
 
         $unpublished = $Photos->getUnpublished($upage);
+
+
         if (empty($unpublished)) {
             $tpl_param['err1_msg'] = 'No private photos to display.';
         }
         $tpl_param['upages'] = $Photos->pages;
 
         $scheduled = $Photos->getScheduled($spage);
+
+
         if (empty($scheduled)) {
             $tpl_param['err2_msg'] = 'No scheduled photos to display.';
         }
@@ -111,11 +121,78 @@ class PhotosController extends Controller
         $tpl_param['unpublished'] = $unpublished;
         $tpl_param['scheduled'] = $scheduled;
 
+        $tpl_param['auth'] = $auth;
+        $tpl_param['site_name'] = $site_name;
+        $tpl_param['menu'] = $menu;
 
-        */
-        return view('home', compact('auth', 'site_name', 'menu'));
+        return view('home', $tpl_param);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Schedule Publish a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function publish(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 
     public function logout() {
         //!TODO: rewrite sessions

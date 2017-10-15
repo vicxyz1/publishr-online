@@ -15,8 +15,11 @@ use App\phpFlickr;
 
 Route::group(['middleware' => ['web']], function () {
 
+    /** Photos */
     //Index page
     Route::get('/', 'PhotosController@index');
+
+    Route::post('/', 'PhotosController@publish');
 
     //simple contact page
     Route::get('/contact', function () {
@@ -24,6 +27,10 @@ Route::group(['middleware' => ['web']], function () {
 
         return view('contact', compact('site_name'));
     });
+
+
+
+
 
     /**
      * Authentication with Flickr
