@@ -10,6 +10,9 @@ Description
 
 Schedule when your Flickr photos will be published for public
 
+Available online:
+
+http://publishr.online
 
 
 
@@ -18,35 +21,7 @@ Features
 
 
 * Flickr OAuth supported
+* Schedule the publishing of private photos and make them as new
+* Add photos to groups when they become public
 
 
-
-INSTALLING
----------
-
-
-
-
-PLANNING
--------
-
-### TODO
-
-* LOG   
-* Logout
-* Contact: send mail
-* FAQ, Terms
-* Stats
-* Bugs:
-    - duplicate scheduled photos
-    - invalid publish time
-
-
-### DOING
-
-* Photos Model
-    - get Scheduled
-    - publish
-
-
-### DONE
