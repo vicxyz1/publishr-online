@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\phpFlickr;
 
+//!FIXME: Rename to Photo
 class Photos extends Model
 {
 
@@ -17,15 +18,13 @@ class Photos extends Model
     public $per_page = 30; //PHOTOS_PER_PAGE;
     public $total_views = 0;
 
-
-
-
+    protected $fillable = ['flickr_photo_id', 'publish_time', 'auth_token', 'auth_secret', 'flickr_groups'];
 
     public function __construct(array $attributes = [])
     {
         $api_key = env('API_KEY');
         $api_secret = env('API_SECRET');
-        $this->_flickr =  new phpFlickr($api_key, $api_secret);
+        $this->_flickr = new phpFlickr($api_key, $api_secret);
 
         parent::__construct($attributes);
     }
@@ -42,7 +41,7 @@ class Photos extends Model
     }
 
     /**
-     *
+     * set privacy
      * @param type $privacy
      */
     public function setPrivacy($privacy)
@@ -51,13 +50,22 @@ class Photos extends Model
         $this->_privacy = $privacy;
     }
 
-
-    public function getGroups() {
+    /**
+     * Get user groups
+     * @return bool
+     */
+    public function getGroups()
+    {
 
         //!TODO: check if token was set
         return $this->_flickr->groups_pools_getGroups();
     }
 
+    /**
+     * Return unpublished photos
+     * @param null $privacy
+     * @return bool
+     */
     public function getPhotos($privacy = null)
     {
 
@@ -94,11 +102,13 @@ class Photos extends Model
         }
         return true;
     }
+
     /**
      * @param $page
      * @return array
      */
-    public function getUnpublished($page) {
+    public function getUnpublished($page)
+    {
 
         if (!$this->getPhotos()) {
             return array();
@@ -147,22 +157,23 @@ class Photos extends Model
      * @param $page
      * @return array
      */
-    function getScheduled($page)
+    public function getScheduled($page)
     {
         if (!$this->getPhotos()) {
             return array();
         }
 
 
-        $total_scheduled =$this->where('auth_token', $this->token['token'])->count();
-            //$this->db->getOne('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array($this->token['token']));
+        $total_scheduled = $this->where('auth_token', $this->token['token'])->count();
+        //$this->db->getOne('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array($this->token['token']));
 
         $this->pages = ceil($total_scheduled / $this->per_page);
 
 //        logEval($total_scheduled, 'total scheduled');
         //!FIXME:
         $scheduled = [];
-            //$this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
+
+        //$this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
 
 //        logEval($scheduled, 'scheduled from db ');
 
@@ -186,6 +197,56 @@ class Photos extends Model
         return $photo_scheduled;
     }
 
+    /**
+     * Schedule photos
+     * array $photos
+     * @param $datetime
+     * @param $groups
+     * @param $tags
+     * @return bool
+     */
+    public function schedule($photos, $datetime, $groups, $tags = [])
+    {
+
+        //TODO: check datetime>now
+
+        if (!is_array($groups)) $groups = array($groups);
+
+        foreach ($photos as $id) {
+            $photo = array(
+                'flickr_photo_id' => $id,
+                'publish_time' => $datetime,
+                'auth_token' => $this->token['token'],
+                'auth_secret' => $this->token['secret'],
+                'flickr_groups' => implode(',', $groups)
+            );
+
+            Photos::create($photo);
+
+
+        }
+
+        return true;
+    }
+
+    /**
+     * Unpublish photos (del from db)
+     * @param $photos
+     */
+    public function unpublish($photos)
+    {
+
+        if (!is_array($photos))
+            $photos = array($photos);
+
+
+
+        foreach ($photos as $id) {
+            Photos::where('flickr_photo_id', $id)
+                ->where('auth_token', $this->token['token'])
+                ->delete();
+        }
+    }
 
 
 }

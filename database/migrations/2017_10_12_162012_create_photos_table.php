@@ -17,12 +17,12 @@ class CreatePhotosTable extends Migration
             $table->increments('photo_id');
             $table->integer('publish_time');
             $table->string('flickr_photo_id', 45);
-            $table->string('flickr_tags');
+            $table->string('flickr_tags')->default('');
             $table->text('flickr_groups');
-            $table->tinyInteger('status');
+            $table->boolean('status')->default(false);
             $table->string('auth_token');
             $table->string('auth_secret');
-            $table->string('url');
+            $table->string('url')->default('');
 
 
             $table->timestamps();

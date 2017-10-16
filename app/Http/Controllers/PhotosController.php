@@ -25,26 +25,24 @@ class PhotosController extends Controller
 
         $token = array(
             'token' => session('phpFlickr_oauth_token'),
-            'secret'=> session('phpFlickr_oauth_secret_token'),
+            'secret' => session('phpFlickr_oauth_secret_token'),
         );
-
 
 
         $action = 'none';
         $menu = 'home';
 
 
-
         $Photos = new Photos();
 
         //$Photos->db = $db;
-        $Photos->setToken($token );
+        $Photos->setToken($token);
 
         $tags = array();
 
         $groups = $Photos->getGroups();
 
-        $groups = (isset($groups['group']))?$groups['group']:[];
+        $groups = (isset($groups['group'])) ? $groups['group'] : [];
 
 
         $tpl_param['groups'] = $groups;
@@ -141,12 +139,44 @@ class PhotosController extends Controller
     /**
      * Schedule photos in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        if (!$request->session()->has('phpFlickr_oauth_token')) {
+            return view('index', compact('site_name'));
+        }
+
+        $auth = true;
+
+        $token = array(
+            'token' => session('phpFlickr_oauth_token'),
+            'secret' => session('phpFlickr_oauth_secret_token'),
+        );
+
+
+        $photos = $request->has('photos')?$request->input('photos'):[];
+        $usergroups = $request->input('groups', []);
+        $tags = [];
+
+        if (!count($photos)) {
+            $tpl_param['err1_msg'] = 'No photo selected.';
+            //!TODO: with flash session
+            return back()->withInput();
+        }
+
+        $datetime = $request->input( 'pub_time');
+
+        $pub_time = date('Y-m-d H:i:s', strtotime($datetime)+ 60*$request->input('tz'));
+
+        $Photos = new Photos();
+
+        $Photos->setToken($token);
+
+        $Photos->schedule($photos,  strtotime($pub_time) , $usergroups, $tags);
+
+
 //        $site_name = env('APP_NAME');
 //
 //
@@ -171,7 +201,7 @@ class PhotosController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -182,7 +212,7 @@ class PhotosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -193,8 +223,8 @@ class PhotosController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -205,7 +235,7 @@ class PhotosController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -213,7 +243,8 @@ class PhotosController extends Controller
         //
     }
 
-    public function logout() {
+    public function logout()
+    {
         //!TODO: rewrite sessions
         unset($_SESSION['phpFlickr_oauth_token']);
         unset($_SESSION['phpFlickr_oauth_secret_token']);
