@@ -139,14 +139,33 @@ class PhotosController extends Controller
     }
 
     /**
-     * Schedule Publish a newly created resource in storage.
+     * Schedule photos in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function publish(Request $request)
+    public function store(Request $request)
     {
         //
+//        $site_name = env('APP_NAME');
+//
+//
+//        if (!$request->session()->has('phpFlickr_oauth_token')) {
+//            return view('index', compact('site_name'));
+//        }
+//
+//        $menu = 'home';
+//        $auth = true;
+//
+//        $tpl_param = [];
+//        $tpl_param['auth'] = $auth;
+//        $tpl_param['site_name'] = $site_name;
+//        $tpl_param['menu'] = $menu;
+
+//        dd($request->all());
+
+
+        return back()->withInput();
     }
 
     /**

@@ -19,7 +19,7 @@ Route::group(['middleware' => ['web']], function () {
     //Index page
     Route::get('/', 'PhotosController@index');
 
-    Route::post('/', 'PhotosController@publish');
+    Route::post('/', 'PhotosController@store');
 
     //simple contact page
     Route::get('/contact', function () {

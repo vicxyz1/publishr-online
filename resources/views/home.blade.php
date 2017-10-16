@@ -25,25 +25,25 @@
             </div>
             @if (isset($err1_msg))
 
-            <div class="alert alert-dismissable alert-danger">{{ $err1_msg }}</div>
+                <div class="alert alert-dismissable alert-danger">{{ $err1_msg }}</div>
 
             @endif
             @if (count($unpublished))
-            <form id="frmUnpublished" method="post" data-toggle="validator"/>
-            <div class="form-group">
-                <select multiple="multiple" class="image-picker show-html " name="photos[]" required>
-                    @foreach ($unpublished as $photo)
-                    <option data-img-src="{{ $photo['url_q'] }} " value=" {{ $photo['id']  }}"
-                            data-img-label='<a data-toggle="lightbox" href="{{ $photo['url_z']  }}">{{ $photo['title']  }}</a>'>
-                        <a href="{{ $photo['url_o']  }}">{{ $photo['title']  }}</a></option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div id="upaginator" class="col-md-12 text-center"></div>
+                <form id="frmUnpublished" method="post" data-toggle="validator"/>
+                <div class="form-group">
+                    <select multiple="multiple" class="image-picker show-html " name="photos[]" required>
+                        @foreach ($unpublished as $photo)
+                            <option data-img-src="{{ $photo['url_q'] }} " value=" {{ $photo['id']  }}"
+                                    data-img-label='<a data-toggle="lightbox" href="{{ $photo['url_z']  }}">{{ $photo['title']  }}</a>'>
+                                <a href="{{ $photo['url_o']  }}">{{ $photo['title']  }}</a></option>
+                        @endforeach
+                    </select>
                 </div>
-            </div>
+                <div class="container">
+                    <div class="row">
+                        <div id="upaginator" class="col-md-12 text-center"></div>
+                    </div>
+                </div>
         </div>
         <div class="container">
             <div class="row">
@@ -100,81 +100,129 @@
                     </div>
                     <input type="hidden" name="action" value="publish"/>
                     <input id="tz" type="hidden" name="tz" value="0"/>
+                    {{ csrf_field() }}
                     </form>
                 </div>
             </div>
         </div>
         @endif
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a name="scheduled"></a>
+                        <h1 class="text-left">Scheduled Photos</h1>
+                        <p class="lead text-left">select photos to cancel the publishing</p>
+                    </div>
+                </div>
+                @if (isset($err2_msg))
 
-        <script src="js/image-picker.min.js"></script>
-        <script src="js/moment.min.js"></script>
-        <script src="js/validator.min.js"></script>
-        <script src="js/bootstrap-datetimepicker.min.js"></script>
-        <script src="js/jquery.twbsPagination.min.js"></script>
-        <script src="js/ekko-lightbox.min.js"></script>
+                    <div class="alert alert-dismissable alert-danger">{{ $err2_msg }}</div>
 
-        <script type="text/javascript">
-            $("select").imagepicker({
-                hide_select: true,
-                show_label: true
-            });
+                @endif
 
+                @if (count($scheduled))
+                    @foreach ($scheduled as $date => $photos_scheduled)
+                        <form id="frmScheduled_{{ str_replace('-', '_', $date) }}" method="post" action="#scheduled"/>
 
-            $("#btnPublish").click(function () {
-                $("#frmUnpublished").submit();
-            });
+                        <input type="hidden" name="action" value="unpublish"/>
+                        <input type="hidden" name="date" value="{{ $date }}"/>
+                        <h4>
+                            <span class="label label-default">{{ date('F, j Y', strtotime($date)) }}</span>
+                            <a name="{{ str_replace('-', '_', $date) }}" href="#btn{{ str_replace('-', '_', $date) }}"
+                               class="btn btn-danger btn-xs"
+                               onclick="$(this).parent().parent().submit(); return false" type="button">Cancel</a>
+                        </h4>
+                        <select multiple="multiple" class="image-picker show-html" name="photos[]">
+                            @foreach ($photos_scheduled as $photo): }}
+                            <option data-img-src="{{ $photo['url_q'] }}"
+                                    value="{{ $photo['id'] }}">{{ $photo['title'] }}</option>
+                            @endforeach
+                        </select>
+                        </form>
 
-            $("#btnGroups").click(function () {
-                //aici tb sa iau toate groupurile si sa le pun intr-un camp...
-                $("#setGroups").modal('toggle');
-            });
-
-            $("#frmUnpublished").validator();
-
-            $("#btnCancel").click(function () {
-                $(this).submit();
-
-            });
-
-            var d = new Date();
-            $('#tz').val(d.getTimezoneOffset());
-
-            $('#datetimepicker1').datetimepicker({
-                // format: "YYYY-MM-DD HH:mm Z",
-                stepping: 15,
-                collapse: true,
-                keepOpen: false,
-                showTodayButton: true,
-                showClose: true,
-                sideBySide: true,
-                useCurrent: true,
-                defaultDate: moment(),
-                minDate: moment().subtract(1, 'minutes')
-            });
-
-            var uoptions = {
-                totalPages: {{ $upages }},
-                visiblePages: 8,
-                href: '?upage=@{{number}}'
-            }
-
-            var soptions = {
-                totalPages: {{ $spages }},
-                visiblePages: 8,
-                href: '?spage=@{{number}}#scheduled'
-            }
+                    @endforeach
+                @endif
 
 
-            if (uoptions.totalPages > 0)
-                $('#upaginator').twbsPagination(uoptions);
-            if (soptions.totalPages > 0)
-                $('#spaginator').twbsPagination(soptions);
-            $(document).delegate('*[data-toggle="lightbox"]', 'click', function (event) {
-                event.preventDefault();
-                $(this).ekkoLightbox();
-            });
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div id="spaginator" class="col-md-12 text-center"></div>
 
-        </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/image-picker.min.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/validator.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script src="js/jquery.twbsPagination.min.js"></script>
+    <script src="js/ekko-lightbox.min.js"></script>
+
+    <script type="text/javascript">
+        $("select").imagepicker({
+            hide_select: true,
+            show_label: true
+        });
+
+
+        $("#btnPublish").click(function () {
+            $("#frmUnpublished").submit();
+        });
+
+        $("#btnGroups").click(function () {
+            //aici tb sa iau toate groupurile si sa le pun intr-un camp...
+            $("#setGroups").modal('toggle');
+        });
+
+        $("#frmUnpublished").validator();
+
+        $("#btnCancel").click(function () {
+            $(this).submit();
+
+        });
+
+        var d = new Date();
+        $('#tz').val(d.getTimezoneOffset());
+
+        $('#datetimepicker1').datetimepicker({
+            // format: "YYYY-MM-DD HH:mm Z",
+            stepping: 15,
+            collapse: true,
+            keepOpen: false,
+            showTodayButton: true,
+            showClose: true,
+            sideBySide: true,
+            useCurrent: true,
+            defaultDate: moment(),
+            minDate: moment().subtract(1, 'minutes')
+        });
+
+        var uoptions = {
+            totalPages: {{ $upages }},
+            visiblePages: 8,
+            href: '?upage=@{{number}}'
+        }
+
+        var soptions = {
+            totalPages: {{ $spages }},
+            visiblePages: 8,
+            href: '?spage=@{{number}}#scheduled'
+        }
+
+
+        if (uoptions.totalPages > 0)
+            $('#upaginator').twbsPagination(uoptions);
+        if (soptions.totalPages > 0)
+            $('#spaginator').twbsPagination(soptions);
+        $(document).delegate('*[data-toggle="lightbox"]', 'click', function (event) {
+            event.preventDefault();
+            $(this).ekkoLightbox();
+        });
+
+    </script>
 
 
 @endsection
