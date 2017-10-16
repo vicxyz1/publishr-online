@@ -102,7 +102,7 @@ class PhotosController extends Controller
 
 
         if (empty($unpublished)) {
-            $tpl_param['err1_msg'] = 'No private photos to display.';
+            $request->session()->put('err1_msg', 'No private photos to display.');
         }
         $tpl_param['upages'] = $Photos->pages;
 
@@ -110,7 +110,7 @@ class PhotosController extends Controller
 
 
         if (empty($scheduled)) {
-            $tpl_param['err2_msg'] = 'No scheduled photos to display.';
+            $request->session()->put('err2_msg', 'No scheduled photos to display.');
         }
         $tpl_param['spages'] = $Photos->pages;
 
@@ -145,6 +145,7 @@ class PhotosController extends Controller
     public function store(Request $request)
     {
         if (!$request->session()->has('phpFlickr_oauth_token')) {
+
             return view('index', compact('site_name'));
         }
 
@@ -161,14 +162,18 @@ class PhotosController extends Controller
         $tags = [];
 
         if (!count($photos)) {
-            $tpl_param['err1_msg'] = 'No photo selected.';
-            //!TODO: with flash session
+            $request->session()->flash('err1_msg', 'No photo selected.');
             return back()->withInput();
         }
 
         $datetime = $request->input( 'pub_time');
 
         $pub_time = date('Y-m-d H:i:s', strtotime($datetime)+ 60*$request->input('tz'));
+
+        if (strtotime($pub_time) < time()) {
+            $request->session()->flash('err1_msg', 'You cannot publish in the past.');
+            return back()->withInput();
+        }
 
         $Photos = new Photos();
 

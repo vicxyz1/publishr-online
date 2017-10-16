@@ -15,7 +15,7 @@ class Photos extends Model
     private $_photos = null;
     //FIXME: nasty, create setters
     public $pages = null;
-    public $per_page = 30; //PHOTOS_PER_PAGE;
+    public $per_page = 5; //PHOTOS_PER_PAGE;
     public $total_views = 0;
 
     protected $fillable = ['flickr_photo_id', 'publish_time', 'auth_token', 'auth_secret', 'flickr_groups'];
@@ -35,7 +35,6 @@ class Photos extends Model
      */
     function setToken($token)
     {
-
         $this->token = $token;
         $this->_flickr->setOauthToken($token['token'], $token['secret']);
     }
@@ -56,8 +55,11 @@ class Photos extends Model
      */
     public function getGroups()
     {
+        if (is_null($this->token)) {
 
-        //!TODO: check if token was set
+            return false;
+        }
+
         return $this->_flickr->groups_pools_getGroups();
     }
 
@@ -165,13 +167,13 @@ class Photos extends Model
 
 
         $total_scheduled = $this->where('auth_token', $this->token['token'])->count();
-        //$this->db->getOne('SELECT COUNT(photo_id) FROM photos WHERE auth_token=? ', array($this->token['token']));
 
         $this->pages = ceil($total_scheduled / $this->per_page);
 
 //        logEval($total_scheduled, 'total scheduled');
         //!FIXME:
-        $scheduled = [];
+        $scheduled = Photos::where('auth_token', $this->token['token'])->paginate($this->per_page);
+
 
         //$this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
 
@@ -179,20 +181,21 @@ class Photos extends Model
 
         $photos = $this->_photos;
 
-
+//        dd($scheduled);
         $photo_scheduled = array();
 
-        if (!empty($scheduled)) {
-            foreach ($scheduled as $id => $datetime) {
-
-                $date = date('Y-m-d', $datetime);
-                if (!isset($this->_photos[$id])) {
-                    $this->unpublish($id);
+        if ($scheduled->count()) {
+            foreach ($scheduled->items() as $photo) {
+                $date = date('Y-m-d', $photo->publish_time);
+                if (!isset($this->_photos[$photo->flickr_photo_id])) {
+                    $this->unpublish($photo->flickr_photo_id);
                     continue;
                 }
-                $photo_scheduled [$date][] = $this->_photos[$id];
+                $photo_scheduled [$date][] = $this->_photos[$photo->flickr_photo_id];
             }
         }
+
+//        dd($photo_scheduled);
 
         return $photo_scheduled;
     }

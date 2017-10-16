@@ -23,9 +23,9 @@
                     <p class="lead text-left">select photos you want to publish later</p>
                 </div>
             </div>
-            @if (isset($err1_msg))
+            @if (Session::has('err1_msg'))
 
-                <div class="alert alert-dismissable alert-danger">{{ $err1_msg }}</div>
+                <div class="alert alert-dismissable alert-danger">{{ session('err1_msg') }}</div>
 
             @endif
             @if (count($unpublished))
@@ -115,9 +115,10 @@
                         <p class="lead text-left">select photos to cancel the publishing</p>
                     </div>
                 </div>
-                @if (isset($err2_msg))
+                @if (Session::has('err2_msg'))
 
-                    <div class="alert alert-dismissable alert-danger">{{ $err2_msg }}</div>
+
+                <div class="alert alert-dismissable alert-danger">{{ session('err2_msg') }}</div>
 
                 @endif
 
@@ -127,6 +128,7 @@
 
                         <input type="hidden" name="action" value="unpublish"/>
                         <input type="hidden" name="date" value="{{ $date }}"/>
+                        {{ csrf_field() }}
                         <h4>
                             <span class="label label-default">{{ date('F, j Y', strtotime($date)) }}</span>
                             <a name="{{ str_replace('-', '_', $date) }}" href="#btn{{ str_replace('-', '_', $date) }}"

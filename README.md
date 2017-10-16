@@ -32,10 +32,15 @@ PLANNING
 
 ### TODO
 
+* LOG   
 * Logout
 * Contact: send mail
 * FAQ, Terms
 * Stats
+* Bugs:
+    - duplicate scheduled photos
+    - invalid publish time
+
 
 ### DOING
 
