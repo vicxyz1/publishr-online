@@ -28,6 +28,8 @@ Route::group(['middleware' => ['web']], function () {
         return view('contact', compact('site_name'));
     });
 
+    Route::delete('/', 'PhotosController@destroy');
+
 
 
 

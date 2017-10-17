@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\phpFlickr;
 
+use Illuminate\Support\Facades\Log;
+
 //!FIXME: Rename to Photo
 class Photos extends Model
 {
@@ -26,6 +28,16 @@ class Photos extends Model
         $api_secret = env('API_SECRET');
         $this->_flickr = new phpFlickr($api_key, $api_secret);
 
+        //auto populate with oauth tokens
+        if (session()->has('phpFlickr_oauth_token')) {
+
+            $token = array(
+                'token' => session('phpFlickr_oauth_token'),
+                'secret' => session('phpFlickr_oauth_secret_token'),
+            );
+
+            $this->setToken($token);
+        }
         parent::__construct($attributes);
     }
 
@@ -122,11 +134,11 @@ class Photos extends Model
 
 //        logEval($this->token,'token before get col');
 
-        $scheduled = $this->pluck('flickr_photo_id')->where('auth_token', $this->token['token']);
+        $scheduled = $this->where('auth_token', $this->token['token'])->pluck('flickr_photo_id');
 
         $scheduled = $scheduled->toArray();
 
-//        logEval($scheduled, 'scheduled from unpublished');
+        Log::debug('scheduled from unpublished',    $scheduled);
 
         //dirty cast
         foreach ($all_photos as $i => $id)

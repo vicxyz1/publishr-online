@@ -125,7 +125,7 @@
                 @if (count($scheduled))
                     @foreach ($scheduled as $date => $photos_scheduled)
                         <form id="frmScheduled_{{ str_replace('-', '_', $date) }}" method="post" action="#scheduled"/>
-
+                         {{ method_field('DELETE') }}
                         <input type="hidden" name="action" value="unpublish"/>
                         <input type="hidden" name="date" value="{{ $date }}"/>
                         {{ csrf_field() }}

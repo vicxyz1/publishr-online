@@ -23,10 +23,7 @@ class PhotosController extends Controller
 
         $auth = true;
 
-        $token = array(
-            'token' => session('phpFlickr_oauth_token'),
-            'secret' => session('phpFlickr_oauth_secret_token'),
-        );
+
 
 
         $action = 'none';
@@ -34,9 +31,6 @@ class PhotosController extends Controller
 
 
         $Photos = new Photos();
-
-        //$Photos->db = $db;
-        $Photos->setToken($token);
 
         $tags = array();
 
@@ -110,7 +104,7 @@ class PhotosController extends Controller
 
 
         if (empty($scheduled)) {
-            $request->session()->put('err2_msg', 'No scheduled photos to display.');
+            $request->session()->flash('err2_msg', 'No scheduled photos to display.');
         }
         $tpl_param['spages'] = $Photos->pages;
 
@@ -243,16 +237,31 @@ class PhotosController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $photos = request('photos');
+        if (!count($photos)) {
+
+            $request->session()->flash('err2_msg', 'No photo selected.');
+            return back();
+        }
+
+        $Photos = new Photos();
+
+        $Photos->unpublish($photos);
+
+        $request->session()->flash('err2_msg', 'Photo publishing canceled.');
+
+        return back();
+
+
     }
 
     public function logout()
     {
-        //!TODO: rewrite sessions
-        unset($_SESSION['phpFlickr_oauth_token']);
-        unset($_SESSION['phpFlickr_oauth_secret_token']);
+
+        session()->forget('phpFlickr_oauth_token');
+        session()->forget('phpFlickr_oauth_secret_token');
         return view('index', compact('site_name'));
     }
 }
