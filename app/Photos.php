@@ -263,5 +263,43 @@ class Photos extends Model
         }
     }
 
+    /**
+     * Make the photo public
+     * @param $photo
+     */
+    function publish($photo)
+    {
+        Log::info($photo->photo_id . ' to publish');
+
+
+
+        if (!$this->_flickr->photos_setPerms($photo->flickr_photo_id, 1, 0, 0, 3, 0)) {
+            Log::warning($this->_flickr->geterrorMsg());
+        }
+
+
+        //modify posted date
+        $this->_flickr->photos_setDates($photo->flickr_photo_id, time());
+        $this->unpublish($photo->flickr_photo_id);
+
+        //add to groups
+        if (!empty($photo->flickr_groups)) {
+
+            $groups = explode(',', $photo->flickr_groups);
+            foreach ($groups as $group_id) {
+                if (!$this->_flickr->groups_pools_add($photo->flickr_photo_id, $group_id)) {
+                    Log::warning($this->_flickr->geterrorMsg());
+                }
+            }
+        }
+
+        if (!$this->_flickr->photos_addTags($photo->flickr_photo_id, 'publishr.online')) {
+            Log::warning($this->_flickr->geterrorMsg());
+        }
+
+
+    }
+
+
 
 }
