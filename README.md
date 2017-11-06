@@ -67,7 +67,9 @@ For __production only__, run the optimizations:
     php artisan config:cache
     php artisan route:cache
     
+Install cron:
 
+    * * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1
 
 For hostings with only Apache server make sure:
  - _mod_rewrite__ enabled 
