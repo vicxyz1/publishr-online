@@ -12,7 +12,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
 </head>
 <body>
-<script async type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 @if (isset($auth))
 
     <div class="navbar navbar-default navbar-static-top">
