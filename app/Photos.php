@@ -17,7 +17,7 @@ class Photos extends Model
     private $_photos = null;
     //FIXME: nasty, create setters
     public $pages = null;
-    public $per_page = 5; //PHOTOS_PER_PAGE;
+    public $per_page; //PHOTOS_PER_PAGE;
     public $total_views = 0;
 
     protected $fillable = ['flickr_photo_id', 'publish_time', 'auth_token', 'auth_secret', 'flickr_groups'];
@@ -27,6 +27,7 @@ class Photos extends Model
         $api_key = env('API_KEY');
         $api_secret = env('API_SECRET');
         $this->_flickr = new phpFlickr($api_key, $api_secret);
+        $this->per_page = env('PHOTOS_PER_PAGE');
 
         //auto populate with oauth tokens
         if (session()->has('phpFlickr_oauth_token')) {
