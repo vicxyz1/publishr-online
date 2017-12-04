@@ -20,17 +20,11 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'PhotosController@index');
 
     Route::post('/', 'PhotosController@store');
-
-    //simple contact page
-    Route::get('/contact', function () {
-        $site_name = env('APP_NAME');
-
-        return view('contact', compact('site_name'));
-    });
-
     Route::delete('/', 'PhotosController@destroy');
 
-
+    //simple contact page
+    Route::get('/contact', 'HomeController@contact');
+    Route::post('/contact', ['as'=>'contact.send', 'uses'=>'HomeController@contactSend']);
 
 
 
