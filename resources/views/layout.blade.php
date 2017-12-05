@@ -34,11 +34,11 @@
                         <a href="{{ url('/') }}">Home</a>
                     </li>
                     <li @if ($menu == 'contact')class="active"@endif>
-                        <a href="{{ url('/contact#contact') }}">Contact</a>
+                        <a href="{{ url('/contact') }}">Contact</a>
                     </li>
                     <li>
-                        <a href="{{ url('/logout') }}" ><i class="fa fa-fw fa-sign-out"></i>Logout</a>
-                        <input type="hidden" name="action" value="logout" />
+                        <a href="{{ url('/logout') }}"><i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                        <input type="hidden" name="action" value="logout"/>
                     </li>
                 </ul>
             </div>
@@ -46,45 +46,46 @@
         </div>
     </div>
 @else
-<div class="cover">
-    <div class="navbar">
+    <div class="cover">
+        <div class="navbar">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#navbar-ex-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ url('/') }}" target="_blank"><span>{{ $site_name }}</span></a>
+
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="navbar-brand" href="http://www.flickr.com" target="_blank"
+                               rel="nofollow"><span>Flickr</span></a></li>
+                        <li class="active">
+                            <a href="{{ url('/contact#contact') }}">Contact</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="cover-image" style="background-image: url('{{ asset('img/cover.jpg') }}')"></div>
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url('/') }}" target="_blank"><span>{{ $site_name }}</span></a>
-
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-ex-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="navbar-brand" href="http://www.flickr.com" target="_blank"
-                           rel="nofollow"><span>Flickr</span></a></li>
-                    <li class="active">
-                        <a href="{{ url('/contact#contact') }}">Contact</a>
-                    </li>
-
-                </ul>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1 class="text-inverse">{{ $site_name }}</h1>
+                    <p class="text-inverse">Upload now, publish when you want!</p>
+                    <br>
+                    <br>
+                    <a class="btn btn-lg btn-primary" href="{{ url('/auth') }}"><i class="fa fa-fw fa-sign-in"></i>Login
+                        using Flickr</a>
+                </div>
             </div>
         </div>
     </div>
-    <div class="cover-image" style="background-image: url('{{ asset('img/cover.jpg') }}')"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1 class="text-inverse">{{ $site_name }}</h1>
-                <p class="text-inverse">Upload now, publish when you want!</p>
-                <br>
-                <br>
-                <a class="btn btn-lg btn-primary" href="{{ url('/auth') }}"><i class="fa fa-fw fa-sign-in"></i>Login
-                    using Flickr</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endif
 
@@ -94,19 +95,35 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 text-left">
-                <h2>
-                    <a href="{{ url('/contact.php#contact') }}" class="text-inverse">
-                        Give Us Your Feedback
-                    </a>
-                    <i class="fa fa-fw fa-comment"></i></h2>
-                <p>Help us improving the application by letting us know about your suggestions or feature requests,
-                    issues discovered while using it.</p>
+                @if (isset($auth))
+                    <h2>
+                        <a href="{{ url('/contact.php') }}" class="text-inverse">
+                            Give Us Your Feedback
+                        </a>
+                        <i class="fa fa-fw fa-comment"></i></h2>
+                    <p>Help us improving the application by letting us know about your suggestions or feature requests,
+                        issues discovered while using it.</p>
 
-                <p class="text-info">
-                    <a href="{{ url('/faq#faq') }}" class="text-inverse">FAQ</a>
-                    <a href="{{ url('/terms#terms') }}" class="text-inverse">Privacy Policy</a>
+                    <p class="text-info">
+                        <a href="{{ url('/faq') }}" class="text-inverse">FAQ</a>
+                        <a href="{{ url('/terms') }}" class="text-inverse">Privacy Policy</a>
 
-                </p>
+                    </p>
+                @else
+                    <h2>
+                        <a href="{{ url('/contact.php#contact') }}" class="text-inverse">
+                            Give Us Your Feedback
+                        </a>
+                        <i class="fa fa-fw fa-comment"></i></h2>
+                    <p>Help us improving the application by letting us know about your suggestions or feature requests,
+                        issues discovered while using it.</p>
+
+                    <p class="text-info">
+                        <a href="{{ url('/faq#faq') }}" class="text-inverse">FAQ</a>
+                        <a href="{{ url('/terms#terms') }}" class="text-inverse">Privacy Policy</a>
+
+                    </p>
+                @endif
 
 
             </div>
