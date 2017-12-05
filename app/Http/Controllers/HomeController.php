@@ -10,9 +10,11 @@ class HomeController extends Controller
 {
     public function contact(Request $request)
     {
+        $menu = 'contact';
+        $auth =$request->session()->has('phpFlickr_oauth_token');
         $site_name = env('APP_NAME');
 
-        return view('contact', compact('site_name'));
+        return view('contact', compact('site_name', 'auth', 'menu'));
     }
 
     public function contactSend(Request $request)
@@ -33,15 +35,16 @@ class HomeController extends Controller
             ), function ($message) use ($request) {
                 $to = env('MAIL_ADMIN');
                 $message->to($to, 'Admin')->subject('Publishr Feedback');
-                $message->replyTo($request->get('email'),$request->get('name'));
+                $message->replyTo($request->get('email'), $request->get('name'));
             });
 
-         return back()->with('success', 'Thanks for contacting us!');
+        return back()->with('success', 'Thanks for contacting us!');
 
 
     }
 
-    public function auth(Request $request) {
+    public function auth(Request $request)
+    {
         $api_key = env('API_KEY');
         $api_secret = env('API_SECRET');
 
@@ -94,17 +97,23 @@ class HomeController extends Controller
     }
 
 
-    public function faq(Request $request) {
-
+    public function faq(Request $request)
+    {
+        $menu = 'home';
+        $auth =$request->session()->has('phpFlickr_oauth_token');
         $site_name = env('APP_NAME');
-        return view('faq', compact('site_name'));
+        return view('faq', compact('site_name', 'auth', 'menu'));
 
     }
 
-    public function terms(Request $request) {
+    public function terms(Request $request)
+    {
+        $menu = 'home';
+        $auth =$request->session()->has('phpFlickr_oauth_token');
+
 
         $site_name = env('APP_NAME');
-        return view('terms', compact('site_name'));
+        return view('terms', compact('site_name', 'auth', 'menu'));
 
     }
 
