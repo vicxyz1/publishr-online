@@ -30,10 +30,10 @@
             <div class="collapse navbar-collapse" id="navbar-ex-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="http://www.flickr.com" rel="nofollow" target="_blank">Back to Flickr</a></li>
-                    <li @if ($menu == 'home') class="active"<?php endif; ?>>
+                    <li @if ($menu == 'home') class="active" @endif>
                         <a href="{{ url('/') }}">Home</a>
                     </li>
-                    <li @if ($menu == 'contact')class="active"<?php endif; ?>>
+                    <li @if ($menu == 'contact')class="active"@endif>
                         <a href="{{ url('/contact#contact') }}">Contact</a>
                     </li>
                     <li>
@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="cover-image" style="background-image: url(img/cover.jpg);"></div>
+    <div class="cover-image" style="background-image: {{ url('img/cover.jpg') }}"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -103,7 +103,7 @@
                     issues discovered while using it.</p>
 
                 <p class="text-info">
-                    <a href="faq.php#faq" class="text-inverse">FAQ</a>
+                    <a href="{{ url('/faq#faq') }}" class="text-inverse">FAQ</a>
                     <a href="terms.php#terms" class="text-inverse">Privacy Policy</a>
 
                 </p>
