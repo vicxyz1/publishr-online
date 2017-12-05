@@ -9,7 +9,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
           type="text/css">
     <link href="{{url('/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -37,7 +37,7 @@
                         <a href="{{ url('/contact#contact') }}">Contact</a>
                     </li>
                     <li>
-                        <a href="index.php?logout=1" ><i class="fa fa-fw fa-sign-out"></i>Logout</a>
+                        <a href="{{ url('/logout') }}" ><i class="fa fa-fw fa-sign-out"></i>Logout</a>
                         <input type="hidden" name="action" value="logout" />
                     </li>
                 </ul>
@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="cover-image" style="background-image: {{ url('img/cover.jpg') }}"></div>
+    <div class="cover-image" style="background-image: url('{{ asset('img/cover.jpg') }}')"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
@@ -95,7 +95,7 @@
         <div class="row">
             <div class="col-sm-6 text-left">
                 <h2>
-                    <a href="contact.php#contact" class="text-inverse">
+                    <a href="{{ url('/contact.php#contact') }}" class="text-inverse">
                         Give Us Your Feedback
                     </a>
                     <i class="fa fa-fw fa-comment"></i></h2>
@@ -104,7 +104,7 @@
 
                 <p class="text-info">
                     <a href="{{ url('/faq#faq') }}" class="text-inverse">FAQ</a>
-                    <a href="terms.php#terms" class="text-inverse">Privacy Policy</a>
+                    <a href="{{ url('/terms#terms') }}" class="text-inverse">Privacy Policy</a>
 
                 </p>
 

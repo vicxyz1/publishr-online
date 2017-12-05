@@ -257,11 +257,5 @@ class PhotosController extends Controller
 
     }
 
-    public function logout()
-    {
 
-        session()->forget('phpFlickr_oauth_token');
-        session()->forget('phpFlickr_oauth_secret_token');
-        return view('index', compact('site_name'));
-    }
 }

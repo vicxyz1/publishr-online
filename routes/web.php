@@ -28,12 +28,14 @@ Route::group(['middleware' => ['web']], function () {
 
 
     Route::get('/faq','HomeController@faq');
+    Route::get('/terms','HomeController@terms');
 
 
     /**
      * Authentication with Flickr
      */
     Route::get('/auth', 'HomeController@auth');
+    Route::get('/logout', 'HomeController@logout');
 
 
 }

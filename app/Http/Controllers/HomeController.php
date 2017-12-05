@@ -82,8 +82,6 @@ class HomeController extends Controller
         $request->session()->put('phpFlickr_oauth_token', $OauthToken);
         $request->session()->put('phpFlickr_oauth_secret_token', $OauthSecretToken);
 
-//    $data = $request->session()->all();
-//    dd($data);
 
         $redirect = $request->session()->has('redirect') ? session('redirect') : '';
 
@@ -101,6 +99,21 @@ class HomeController extends Controller
         $site_name = env('APP_NAME');
         return view('faq', compact('site_name'));
 
+    }
+
+    public function terms(Request $request) {
+
+        $site_name = env('APP_NAME');
+        return view('terms', compact('site_name'));
+
+    }
+
+    public function logout()
+    {
+
+        session()->forget('phpFlickr_oauth_token');
+        session()->forget('phpFlickr_oauth_secret_token');
+        return view('index', compact('site_name'));
     }
 
 }
