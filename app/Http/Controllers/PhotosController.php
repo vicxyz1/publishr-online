@@ -117,6 +117,8 @@ class PhotosController extends Controller
         $tpl_param['site_name'] = $site_name;
         $tpl_param['menu'] = $menu;
 
+
+
         return view('home', $tpl_param);
     }
 

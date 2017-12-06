@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\phpFlickr;
@@ -114,6 +115,24 @@ class HomeController extends Controller
 
         $site_name = env('APP_NAME');
         return view('terms', compact('site_name', 'auth', 'menu'));
+
+    }
+
+    public function stats(Request $request) {
+
+
+        if (!$request->session()->has('phpFlickr_oauth_token')) {
+            return view('index', compact('site_name'));
+        }
+
+        $auth = true;
+        $menu = 'stats';
+        $site_name = env('APP_NAME');
+        $Photos = new Photos();
+        $photos = $Photos->getMostViewed(24);
+        $total = $Photos->total_views;
+
+        return  view('stats', compact('photos', 'menu', 'total', 'site_name', 'auth'));
 
     }
 

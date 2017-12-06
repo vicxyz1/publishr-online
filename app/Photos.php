@@ -102,12 +102,10 @@ class Photos extends Model
 
 
         if (!$photos) {
-//            logMessage($this->_flickr->getErrorMsg());
             return false;
         }
 
         $photos = $photos['photo'];
-//        logEval($photos, 'photos');
 
 
         $this->_photos = array();
@@ -133,7 +131,6 @@ class Photos extends Model
         $this->pages = 0;
         //check if already scheduled
 
-//        logEval($this->token,'token before get col');
 
         $scheduled = $this->where('auth_token', $this->token['token'])->pluck('flickr_photo_id');
 
@@ -145,15 +142,11 @@ class Photos extends Model
         foreach ($all_photos as $i => $id)
             $all_photos[$i] = (string)$id;
 
-//        logEval($all_photos, 'all photos');
-//        logEval($scheduled, 'scheduled');
         $unscheduled = array_diff($all_photos, $scheduled);
 
 
-//        logEval($unscheduled, 'unscheduled');
 
         $photos = array();
-        //var_dump($scheduled);
         if (!empty($unscheduled)) {
 
             $this->pages = ceil(count($unscheduled) / $this->per_page);
@@ -163,7 +156,6 @@ class Photos extends Model
                 $photos[$id] = $this->_photos[$id];
             }
         }
-//        logEval($photos, 'unscheduled photos');
 
         return $photos;
     }
@@ -183,12 +175,9 @@ class Photos extends Model
 
         $this->pages = ceil($total_scheduled / $this->per_page);
 
-//        logEval($total_scheduled, 'total scheduled');
         //!FIXME:
         $scheduled = Photos::where('auth_token', $this->token['token'])->paginate($this->per_page);
 
-
-        //$this->db->getAssoc('SELECT flickr_photo_id, publish_time FROM photos WHERE auth_token=? ORDER BY publish_time LIMIT ? OFFSET ?', array($this->token['token'], $this->per_page, ($page - 1) * $this->per_page));
 
 //        logEval($scheduled, 'scheduled from db ');
 
@@ -300,6 +289,34 @@ class Photos extends Model
 
 
     }
+
+    /**
+     * get most viewed photos
+     * @param int $count
+     * @return array
+     */
+    public function getMostViewed($count = 10)
+    {
+        //get public & reset photos
+        $this->_photos = null;
+        Log::info('getMostViewed');
+        if (!$this->getPhotos(1)) {
+            Log::warning('Error getting photos');
+            return [];
+        };
+        $views_photos = $this->_photos;
+
+
+        uasort($views_photos, function ($p1, $p2)
+        {
+            if ($p1['views'] == $p2['views'])
+                return 0;
+            return ($p1['views'] > $p2['views']) ? -1 : 1;
+        });
+
+        return array_slice($views_photos, 0, $count);
+    }
+
 
 
 

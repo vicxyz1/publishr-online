@@ -33,6 +33,9 @@
                     <li @if ($menu == 'home') class="active" @endif>
                         <a href="{{ url('/') }}">Home</a>
                     </li>
+                    <li @if ($menu == 'stats') class="active" @endif>
+                        <a href="{{ url('/stats') }}">Statistics</a>
+                    </li>
                     <li @if ($menu == 'contact')class="active"@endif>
                         <a href="{{ url('/contact') }}">Contact</a>
                     </li>

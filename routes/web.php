@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/terms','HomeController@terms');
 
 
+    Route::get('/stats','HomeController@stats');
     /**
      * Authentication with Flickr
      */
