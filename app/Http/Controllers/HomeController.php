@@ -120,14 +120,15 @@ class HomeController extends Controller
 
     public function stats(Request $request) {
 
-
+        //check if logged
         if (!$request->session()->has('phpFlickr_oauth_token')) {
-            return view('index', compact('site_name'));
+           return redirect('');
         }
 
-        $auth = true;
-        $menu = 'stats';
         $site_name = env('APP_NAME');
+        $auth = true;
+        $menu = 'statistics';
+
         $Photos = new Photos();
         $photos = $Photos->getMostViewed(24);
         $total = $Photos->total_views;
