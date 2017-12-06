@@ -13,7 +13,7 @@
 </head>
 <body>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-@if (isset($auth))
+@if ($auth)
 
     <div class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -95,9 +95,9 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 text-left">
-                @if (isset($auth))
+                @if ($auth)
                     <h2>
-                        <a href="{{ url('/contact.php') }}" class="text-inverse">
+                        <a href="{{ url('/contact') }}" class="text-inverse">
                             Give Us Your Feedback
                         </a>
                         <i class="fa fa-fw fa-comment"></i></h2>
@@ -111,7 +111,7 @@
                     </p>
                 @else
                     <h2>
-                        <a href="{{ url('/contact.php#contact') }}" class="text-inverse">
+                        <a href="{{ url('/contact#contact') }}" class="text-inverse">
                             Give Us Your Feedback
                         </a>
                         <i class="fa fa-fw fa-comment"></i></h2>
