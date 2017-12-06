@@ -75,7 +75,7 @@
                                 required>
                             @if (count($groups)):
                             @foreach ($groups as $id => $group):
-                            {{ $src = !$group['iconfarm'] ? 'https://s.yimg.com/pw/images/buddyicon03_r.png' : "http://farm{$group['iconfarm']}.staticflickr.com/{$group['iconserver']}/buddyicons/{$group['nsid']}.jpg" }}
+                            {{ $src = !$group['iconfarm'] ? 'https://s.yimg.com/pw/images/buddyicon03_r.png' : "https://farm{$group['iconfarm']}.staticflickr.com/{$group['iconserver']}/buddyicons/{$group['nsid']}.jpg" }}
                             <option width=48 data-img-src="{{ $src }}"
                                     value="{{ $group['id'] }}"> {{$group['name'] }}</option>
                             @endforeach
