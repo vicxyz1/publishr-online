@@ -13,7 +13,7 @@
 </head>
 <body>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-@if ($auth)
+@if (isset($auth) && $auth == true)
 
     <div class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -95,7 +95,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6 text-left">
-                @if ($auth)
+                @if (isset($auth) && $auth == true)
                     <h2>
                         <a href="{{ url('/contact') }}" class="text-inverse">
                             Give Us Your Feedback
