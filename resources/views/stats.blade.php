@@ -21,7 +21,7 @@
                             <img src="{{ $photo['url_q'] }}" alt="{{ $photo['title'] }}">
                             <div class="caption">
                                 <h3>{{ $photo['title'] }}</h3>
-                                <p>{{  $photo['views'] }} views</p>
+                                <p>{{  $photo['views'] }} views<br/><small>since {{ date("M d, Y", $photo['dateupload']) }}</small></p>
 
                             </div>
                         </div>

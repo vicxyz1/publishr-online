@@ -93,7 +93,7 @@ class Photos extends Model
         $search_param = array(
             'user_id' => 'me',
             'per_page' => 300,
-            'extras' => 'url_t, url_q, views,url_o, url_z',
+            'extras' => 'url_t, url_q, views,url_o, url_z, date_upload',
             'privacy_filter' => (is_null($privacy) || $privacy > 5 || $privacy < 1) ? $this->_privacy : $privacy
         );
 
