@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-    <title>{{ $site_name }} @if (isset($menu)): - {{ $menu }}@endif</title>
+    <title>{{ $site_name }}  - @if (isset($menu)){{ ucwords($menu) }}@else Upload now, publish when you want! @endif</title>
     <meta name="description"
           content="Upload your photos as private, make them public when you want! Simplify your way to publish photos from the photostream.">
     <meta charset="utf-8">
@@ -33,7 +33,7 @@
                     <li @if ($menu == 'home') class="active" @endif>
                         <a href="{{ url('/') }}">Home</a>
                     </li>
-                    <li @if ($menu == 'stats') class="active" @endif>
+                    <li @if ($menu == 'statistics') class="active" @endif>
                         <a href="{{ url('/stats') }}">Statistics</a>
                     </li>
                     <li @if ($menu == 'contact')class="active"@endif>
@@ -138,6 +138,7 @@
                 </h2>
 
                 <p>Full Open Source code based on Flickr API using OAuth</p>
+                <p>{{ $site_name }} &copy; {{ date("Y") }}</p>
             </div>
         </div>
     </div>
