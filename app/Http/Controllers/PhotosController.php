@@ -14,7 +14,7 @@ class PhotosController extends Controller
      */
     public function index(Request $request)
     {
-        $site_name = env('APP_NAME');
+        $site_name = config('app.name');
 
 
         if (!$request->session()->has('phpFlickr_oauth_token')) {
@@ -40,52 +40,6 @@ class PhotosController extends Controller
 
 
         $tpl_param['groups'] = $groups;
-
-        /*
-
-        if (isset($_POST['action'])) {
-
-            $action = $_POST['action'];
-
-
-
-            $photos = isset($_POST['photos']) ? $_POST['photos'] : array();
-            $usergroups = isset($_POST['groups']) ? $_POST['groups'] : array();
-
-
-
-            if ($action == 'publish'):
-                if (!count($photos)) {
-                    $tpl_param['err1_msg'] = 'No photo selected.';
-                }
-                $datetime = $_POST['pub_time'];
-
-                $pub_time = date('Y-m-d H:i:s', strtotime($datetime)+ 60*$_POST['tz']);
-
-                //$pub_time = DateTime::createFromFormat('Y-m-d H:i T', $datetime, new DateTimeZone(SITE_TIMEZONE));
-                //    $pub_time = date('Y-m-d H:i:s', $pub_time);
-                logEval($pub_time, 'pub time');
-
-
-
-                //everything ok
-                if (!isset($tpl_param['err1_msg'])) {
-                    $Photos->schedule($photos,  strtotime($pub_time) , $usergroups, $tags);
-                }
-
-            endif;
-
-            if ($action == 'unpublish'):
-                if (!count($photos)) {
-                    $tpl_param['err2_msg'] = 'No photo selected.';
-                }
-
-                $Photos->unpublish($photos);
-
-            endif;
-        }
-
-        */
 
 
         $spage = isset($_GET['spage']) ? $_GET['spage'] : 1;
@@ -122,15 +76,6 @@ class PhotosController extends Controller
         return view('home', $tpl_param);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Schedule photos in storage.
@@ -174,27 +119,7 @@ class PhotosController extends Controller
         $Photos = new Photos();
 
         $Photos->setToken($token);
-
         $Photos->schedule($photos,  strtotime($pub_time) , $usergroups, $tags);
-
-
-//        $site_name = env('APP_NAME');
-//
-//
-//        if (!$request->session()->has('phpFlickr_oauth_token')) {
-//            return view('index', compact('site_name'));
-//        }
-//
-//        $menu = 'home';
-//        $auth = true;
-//
-//        $tpl_param = [];
-//        $tpl_param['auth'] = $auth;
-//        $tpl_param['site_name'] = $site_name;
-//        $tpl_param['menu'] = $menu;
-
-//        dd($request->all());
-
 
         return back()->withInput();
     }

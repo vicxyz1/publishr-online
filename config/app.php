@@ -234,4 +234,5 @@ return [
 
     ],
 
+    'photos_per_page' => env('PHOTOS_PER_PAGE', 18),
 ];

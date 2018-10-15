@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         $menu = 'contact';
         $auth =$request->session()->has('phpFlickr_oauth_token');
-        $site_name = env('APP_NAME');
+        $site_name = config('app.name');
 
         return view('contact', compact('site_name', 'auth', 'menu'));
     }
@@ -34,7 +34,7 @@ class HomeController extends Controller
                 'email' => $request->get('email'),
                 'user_message' => $request->get('message')
             ), function ($message) use ($request) {
-                $to = env('MAIL_ADMIN');
+                $to = config('mail.to');
                 $message->to($to, 'Admin')->subject('Publishr Feedback');
                 $message->replyTo($request->get('email'), $request->get('name'));
             });
@@ -46,12 +46,12 @@ class HomeController extends Controller
 
     public function auth(Request $request)
     {
-        $api_key = env('API_KEY');
-        $api_secret = env('API_SECRET');
+        $api_key = config('auth.flickr.key');
+        $api_secret = config('auth.flickr.secret');
 
         $f = new phpFlickr($api_key, $api_secret);
 
-        $site_url = env('APP_URL');
+        $site_url = config('app.url');
 
         $default_redirect = $site_url;
         $permissions = "write";
@@ -102,7 +102,7 @@ class HomeController extends Controller
     {
         $menu = 'home';
         $auth =$request->session()->has('phpFlickr_oauth_token');
-        $site_name = env('APP_NAME');
+        $site_name = config('app.name');
         return view('faq', compact('site_name', 'auth', 'menu'));
 
     }
@@ -113,7 +113,7 @@ class HomeController extends Controller
         $auth =$request->session()->has('phpFlickr_oauth_token');
 
 
-        $site_name = env('APP_NAME');
+        $site_name = config('app.name');
         return view('terms', compact('site_name', 'auth', 'menu'));
 
     }
@@ -125,7 +125,7 @@ class HomeController extends Controller
            return redirect('');
         }
 
-        $site_name = env('APP_NAME');
+        $site_name = config('app.name');
         $auth = true;
         $menu = 'statistics';
 

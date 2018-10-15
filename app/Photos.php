@@ -24,10 +24,10 @@ class Photos extends Model
 
     public function __construct(array $attributes = [])
     {
-        $api_key = env('API_KEY');
-        $api_secret = env('API_SECRET');
+        $api_key = config('auth.flickr.key');
+        $api_secret = config('auth.flickr.secret');
         $this->_flickr = new phpFlickr($api_key, $api_secret);
-        $this->per_page = env('PHOTOS_PER_PAGE');
+        $this->per_page = config('app.photos_per_page');
 
         //auto populate with oauth tokens
         if (session()->has('phpFlickr_oauth_token')) {
